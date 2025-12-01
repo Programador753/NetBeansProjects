@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Listado de Misiones"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{misionController.items}" var="item" 
+                             rows="10" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} misiones"
+                             rowsPerPageTemplate="5,10,25,50"
+                             emptyMessage="No hay misiones registradas"
+                             tableStyle="table-layout:auto"
+                             style="margin-top:20px;">
+                    
+                    <!-- Codigo -->
+                    <p:column headerText="Cod." sortBy="#{item.codMision}" style="text-align:center; width:60px;">
+                        <h:outputText value="#{item.codMision}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre -->
+                    <p:column headerText="Nombre de la Mision" sortBy="#{item.nomMision}">
+                        <h:outputText value="#{item.nomMision}"/>
+                    </p:column>
+                    
+                    <!-- Inspectoria -->
+                    <p:column headerText="Insp." sortBy="#{item.codInspectoria}" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.codInspectoria}"/>
+                    </p:column>
+                    
+                    <!-- Ciudad -->
+                    <p:column headerText="Ciudad" sortBy="#{item.ciudad}" style="width:120px;">
+                        <h:outputText value="#{item.ciudad}"/>
+                    </p:column>
+                    
+                    <!-- Pais -->
+                    <p:column headerText="Pais" sortBy="#{item.pais}" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.pais}"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
+                        <h:commandLink action="#{misionController.prepareView}" value="Ver" 
+                                       title="Ver detalles" style="margin-right:5px;"/>
+                        <h:commandLink action="#{misionController.prepareEdit}" value="Editar" 
+                                       title="Editar mision" style="margin-right:5px;"/>
+                        <h:commandLink action="#{misionController.destroy}" value="X" 
+                                       title="Eliminar mision" style="color:red;"
+                                       onclick="return confirm('Esta seguro de eliminar esta mision?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value="Nueva Mision" action="#{misionController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value="Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

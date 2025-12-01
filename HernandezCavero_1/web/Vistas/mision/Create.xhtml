@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Nueva Mision"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <p:panel header="Datos de la Mision">
+                    <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                        
+                        <p:outputLabel value="Nombre Mision: *"/>
+                        <p:inputText value="#{misionController.selected.nomMision}" 
+                                     required="true" size="60" style="width:400px;"/>
+                        
+                        <p:outputLabel value="Inspectoria:"/>
+                        <p:inputText value="#{misionController.selected.codInspectoria}" size="5"/>
+                        
+                        <p:outputLabel value="Direccion 1:"/>
+                        <p:inputText value="#{misionController.selected.direccion1}" size="60" style="width:400px;"/>
+                        
+                        <p:outputLabel value="Direccion 2:"/>
+                        <p:inputText value="#{misionController.selected.direccion2}" size="60" style="width:400px;"/>
+                        
+                        <p:outputLabel value="Ciudad:"/>
+                        <p:inputText value="#{misionController.selected.ciudad}" size="30"/>
+                        
+                        <p:outputLabel value="Provincia:"/>
+                        <p:inputText value="#{misionController.selected.provincia}" size="30"/>
+                        
+                        <p:outputLabel value="Pais:"/>
+                        <p:inputText value="#{misionController.selected.pais}" size="4" maxlength="2"/>
+                        
+                        <p:outputLabel value="Telefono:"/>
+                        <p:inputText value="#{misionController.selected.telefono}" size="20"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value="Guardar" action="#{misionController.create}" 
+                                     icon="pi pi-save" styleClass="ui-button-success"/>
+                    <p:commandButton value="Volver al Listado" action="#{misionController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary" immediate="true"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

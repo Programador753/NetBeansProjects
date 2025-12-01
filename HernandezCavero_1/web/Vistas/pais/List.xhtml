@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Listado de Paises"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{paisController.items}" var="item" 
+                             rows="15" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} paises"
+                             rowsPerPageTemplate="10,15,25,50"
+                             emptyMessage="No hay paises registrados"
+                             style="margin-top:20px;">
+                    
+                    <!-- Codigo ISO -->
+                    <p:column headerText="Codigo" sortBy="#{item.codPais}" width="80" style="text-align:center">
+                        <h:outputText value="#{item.codPais}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre en Espanol -->
+                    <p:column headerText="Nombre" sortBy="#{item.nomPais}" width="250">
+                        <h:outputText value="#{item.nomPais}"/>
+                    </p:column>
+                    
+                    <!-- Nombre en Ingles -->
+                    <p:column headerText="Nombre (Ingles)" sortBy="#{item.nomPaisIngles}" width="250">
+                        <h:outputText value="#{item.nomPaisIngles}"/>
+                    </p:column>
+                    
+                    <!-- Codigo Telefono -->
+                    <p:column headerText="Cod. Tel." sortBy="#{item.codPaisTelefono}" width="80" style="text-align:center">
+                        <h:outputText value="+#{item.codPaisTelefono}" rendered="#{item.codPaisTelefono ne null}"/>
+                    </p:column>
+                    
+                    <!-- Subcontinente -->
+                    <p:column headerText="Subcontinente" sortBy="#{item.subContinente}" width="120" style="text-align:center">
+                        <h:outputText value="#{item.subContinente}"/>
+                    </p:column>
+                    
+                    <!-- Region -->
+                    <p:column headerText="Region" sortBy="#{item.codRegion}" width="80" style="text-align:center">
+                        <h:outputText value="#{item.codRegion}"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
+                        <h:commandLink action="#{paisController.prepareView}" value="Ver" 
+                                       title="Ver detalles" style="margin-right:8px;"/>
+                        <h:commandLink action="#{paisController.prepareEdit}" value="Editar" 
+                                       title="Editar pais" style="margin-right:8px;"/>
+                        <h:commandLink action="#{paisController.destroy}" value="Eliminar" 
+                                       title="Eliminar pais"
+                                       onclick="return confirm('Esta seguro de eliminar este pais?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value="Nuevo Pais" action="#{paisController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value="Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

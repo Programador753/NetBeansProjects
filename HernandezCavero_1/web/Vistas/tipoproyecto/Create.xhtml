@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nuevo Tipo de Proyecto</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header=" Tipo de Proyecto">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Código: *" for="codTipoProyecto"/>
+                        <p:inputText id="codTipoProyecto" value="#{tipoproyectoController.selected.codTipoProyecto}" required="true" size="5"/>
+                        <p:outputLabel value="Nombre: *" for="nomTipoProyecto"/>
+                        <p:inputText id="nomTipoProyecto" value="#{tipoproyectoController.selected.nomTipoProyecto}" required="true" size="50"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{tipoproyectoController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{tipoproyectoController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

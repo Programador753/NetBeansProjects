@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nuevo Registro de Auditoría</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header=" Datos de Auditoría">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Usuario:"/>
+                        <h:selectOneMenu value="#{auditoriaController.selected.codUsuario}">
+                            <f:selectItem itemLabel="-- Seleccione Usuario --" itemValue=""/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Acción: *"/>
+                        <p:selectOneMenu value="#{auditoriaController.selected.accion}">
+                            <f:selectItem itemLabel="-- Seleccione Acción --" itemValue=""/>
+                            <f:selectItem itemLabel="CREAR" itemValue="CREATE"/>
+                            <f:selectItem itemLabel="EDITAR" itemValue="UPDATE"/>
+                            <f:selectItem itemLabel="ELIMINAR" itemValue="DELETE"/>
+                            <f:selectItem itemLabel="VER" itemValue="VIEW"/>
+                            <f:selectItem itemLabel="LOGIN" itemValue="LOGIN"/>
+                            <f:selectItem itemLabel="LOGOUT" itemValue="LOGOUT"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Entidad:"/>
+                        <p:inputText value="#{auditoriaController.selected.entidad}" size="30"/>
+                        <p:outputLabel value="Código Registro:"/>
+                        <p:inputText value="#{auditoriaController.selected.codRegistro}" size="30"/>
+                        <p:outputLabel value="Fecha/Hora:"/>
+                        <p:calendar value="#{auditoriaController.selected.fecha}" pattern="dd/MM/yyyy HH:mm:ss" showOn="button"/>
+                        <p:outputLabel value="Descripción:"/>
+                        <p:inputTextarea value="#{auditoriaController.selected.descripcion}" rows="3" cols="50"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{auditoriaController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{auditoriaController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

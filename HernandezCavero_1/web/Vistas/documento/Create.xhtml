@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nuevo Documento</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form enctype="multipart/form-data">
+                <p:panel header="📄 Datos del Documento">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Proyecto:"/>
+                        <h:selectOneMenu value="#{documentoController.selected.codProyecto}">
+                            <f:selectItem itemLabel="-- Seleccione Proyecto --" itemValue=""/>
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Nombre Documento: *"/>
+                        <p:inputText value="#{documentoController.selected.nomDocumento}" required="true" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Tipo Documento:"/>
+                        <p:selectOneMenu value="#{documentoController.selected.tipoDocumento}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItem itemLabel="Formulario" itemValue="FORM"/>
+                            <f:selectItem itemLabel="Informe" itemValue="INF"/>
+                            <f:selectItem itemLabel="Contrato" itemValue="CONT"/>
+                            <f:selectItem itemLabel="Justificante" itemValue="JUST"/>
+                            <f:selectItem itemLabel="Otro" itemValue="OTRO"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Descripción:"/>
+                        <p:inputTextarea value="#{documentoController.selected.descripcion}" rows="3" cols="50"/>
+                        <p:outputLabel value="Ruta/URL:"/>
+                        <p:inputText value="#{documentoController.selected.ruta}" size="60" style="width:400px;"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{documentoController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{documentoController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

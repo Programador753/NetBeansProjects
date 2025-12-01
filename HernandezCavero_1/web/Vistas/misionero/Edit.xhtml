@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Editar Misionero: #{misioneroController.selected.nomMisionero}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <p:panel header="Datos del Misionero">
+                    <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                        
+                        <p:outputLabel value="Codigo:"/>
+                        <p:inputText value="#{misioneroController.selected.codMisionero}" disabled="true"/>
+                        
+                        <p:outputLabel value="Nombre Completo: *"/>
+                        <p:inputText value="#{misioneroController.selected.nomMisionero}" 
+                                     required="true" size="60" style="width:400px;"/>
+                        
+                        <p:outputLabel value="Tipo Misionero:"/>
+                        <p:selectOneMenu value="#{misioneroController.selected.tipoMisionero}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItem itemLabel="SDB - Salesiano" itemValue="SDB"/>
+                            <f:selectItem itemLabel="FMA - Hija de Maria Auxiliadora" itemValue="FMA"/>
+                            <f:selectItem itemLabel="HDS - Hermana de Don Bosco" itemValue="HDS"/>
+                            <f:selectItem itemLabel="SEG - Seglar" itemValue="SEG"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Email Principal:"/>
+                        <p:inputText value="#{misioneroController.selected.mail1}" size="50"/>
+                        
+                        <p:outputLabel value="Email Secundario:"/>
+                        <p:inputText value="#{misioneroController.selected.mail2}" size="50"/>
+                        
+                        <p:outputLabel value="Telefono:"/>
+                        <p:inputText value="#{misioneroController.selected.telefono}" size="20"/>
+                        
+                        <p:outputLabel value="Codigo Mision:"/>
+                        <p:inputText value="#{misioneroController.selected.codMision}" size="10"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value="Guardar Cambios" action="#{misioneroController.update}" 
+                                     icon="pi pi-save" styleClass="ui-button-success"/>
+                    <p:commandButton value="Ver Detalle" action="#{misioneroController.prepareView}" 
+                                     icon="pi pi-eye" styleClass="ui-button-info"/>
+                    <p:commandButton value="Volver al Listado" action="#{misioneroController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary" immediate="true"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

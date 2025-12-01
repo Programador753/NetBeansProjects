@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            Sistema de Gestion de Misiones y Proyectos
+        </ui:define>
+        
+        <ui:define name="body">
+            <!-- Panel de Bienvenida -->
+            <p:panel header="Panel Principal" style="margin-bottom:20px;">
+                <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                    
+                    <!-- Card Proyectos -->
+                    <p:panel header="Proyectos" style="text-align:center;">
+                        <p style="color:#666;">Gestion completa de proyectos de cooperacion</p>
+                        <h:link outcome="Vistas/proyecto/List" styleClass="ui-button ui-button-info" style="padding:8px 15px; text-decoration:none;">
+                            Ver Proyectos
+                        </h:link>
+                    </p:panel>
+                    
+                    <!-- Card Inspectorias -->
+                    <p:panel header="Inspectorias" style="text-align:center;">
+                        <p style="color:#666;">Administracion de inspectorias salesianas</p>
+                        <h:link outcome="Vistas/inspectoria/List" styleClass="ui-button ui-button-success" style="padding:8px 15px; text-decoration:none;">
+                            Ver Inspectorias
+                        </h:link>
+                    </p:panel>
+                    
+                    <!-- Card Sedes -->
+                    <p:panel header="Sedes" style="text-align:center;">
+                        <p style="color:#666;">Control de sedes y ubicaciones</p>
+                        <h:link outcome="Vistas/sede/List" styleClass="ui-button ui-button-warning" style="padding:8px 15px; text-decoration:none;">
+                            Ver Sedes
+                        </h:link>
+                    </p:panel>
+                    
+                    <!-- Card Misioneros -->
+                    <p:panel header="Misioneros" style="text-align:center;">
+                        <p style="color:#666;">Gestion del personal misionero</p>
+                        <h:link outcome="Vistas/misionero/List" styleClass="ui-button ui-button-help" style="padding:8px 15px; text-decoration:none;">
+                            Ver Misioneros
+                        </h:link>
+                    </p:panel>
+                    
+                </h:panelGrid>
+            </p:panel>
+            
+            <!-- Menu Principal con Categorias -->
+            <p:panel header="Acceso Rapido por Categorias" style="margin-bottom:20px;">
+                <h:panelGrid columns="3" cellpadding="15" style="width:100%;">
+                    
+                    <!-- Columna 1: Proyectos y Financiacion -->
+                    <h:panelGroup>
+                        <h3 style="color:#1a237e; border-bottom:2px solid #1a237e; padding-bottom:5px;">
+                            Proyectos y Financiacion
+                        </h3>
+                        <ul style="list-style:none; padding:0;">
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/proyecto/List" value="Listado de Proyectos"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/envio/List" value="Envios de Dinero"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/entidad/List" value="Entidades Financiadoras"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/tipoentidad/List" value="Tipos de Entidad"/></li>
+                        </ul>
+                    </h:panelGroup>
+                    
+                    <!-- Columna 2: Organizacion Salesiana -->
+                    <h:panelGroup>
+                        <h3 style="color:#4CAF50; border-bottom:2px solid #4CAF50; padding-bottom:5px;">
+                            Organizacion Salesiana
+                        </h3>
+                        <ul style="list-style:none; padding:0;">
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/inspectoria/List" value="Inspectorias"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/mision/List" value="Misiones"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/sede/List" value="Sedes"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/misionero/List" value="Misioneros"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/responsable/List" value="Responsables"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/tecnico/List" value="Tecnicos"/></li>
+                        </ul>
+                    </h:panelGroup>
+                    
+                    <!-- Columna 3: Clasificacion y Geografia -->
+                    <h:panelGroup>
+                        <h3 style="color:#FF9800; border-bottom:2px solid #FF9800; padding-bottom:5px;">
+                            Clasificacion y Geografia
+                        </h3>
+                        <ul style="list-style:none; padding:0;">
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/pais/List" value="Paises"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/continente/List" value="Continentes"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/region/List" value="Regiones"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/sector/List" value="Sectores MS"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/subsector/List" value="Subsectores"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/cad/List" value="Codigos CAD"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/crs/List" value="Codigos CRS"/></li>
+                            <li style="padding:8px 0;"><h:link outcome="Vistas/odsprincipal/List" value="ODS"/></li>
+                        </ul>
+                    </h:panelGroup>
+                    
+                </h:panelGrid>
+            </p:panel>
+            
+            <!-- Panel de Informacion -->
+            <p:panel header="Informacion del Sistema">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputText value="Sistema:" style="font-weight:bold;"/>
+                    <h:outputText value="Gestion de Misiones y Proyectos de Cooperacion Internacional"/>
+                    
+                    <h:outputText value="Organizacion:" style="font-weight:bold;"/>
+                    <h:outputText value="Misiones Salesianas"/>
+                    
+                    <h:outputText value="Tecnologias:" style="font-weight:bold;"/>
+                    <h:outputText value="Java EE, JSF 2.3, PrimeFaces, JPA, EJB, MySQL"/>
+                    
+                    <h:outputText value="Version:" style="font-weight:bold;"/>
+                    <h:outputText value="1.0.0"/>
+                </h:panelGrid>
+            </p:panel>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

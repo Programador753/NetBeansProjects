@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">Nuevo Instrumento</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header="Instrumento de Financiacion">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="LT: *" for="lt"/>
+                        <p:inputText id="lt" value="#{instrumentoController.selected['lt']}" required="true" size="5" maxlength="2"/>
+                        <p:outputLabel value="Codigo:" for="codigo"/>
+                        <p:inputText id="codigo" value="#{instrumentoController.selected.codigo}" size="15" maxlength="12"/>
+                        <p:outputLabel value="Descripcion:" for="descripcion"/>
+                        <p:inputText id="descripcion" value="#{instrumentoController.selected.descripcion}" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Numero:" for="numero"/>
+                        <p:inputText id="numero" value="#{instrumentoController.selected.numero}" size="10"/>
+                        <p:outputLabel value="Bloque:" for="bloque"/>
+                        <p:inputText id="bloque" value="#{instrumentoController.selected.bloque}" size="5" maxlength="1"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value="Guardar" action="#{instrumentoController.create}" icon="pi pi-save"/>
+                <p:commandButton value="Volver" action="#{instrumentoController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

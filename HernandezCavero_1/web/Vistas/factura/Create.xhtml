@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nueva Factura</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header="🧾 Datos de la Factura">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Número Factura: *"/>
+                        <p:inputText value="#{facturaController.selected.numFactura}" required="true" size="20"/>
+                        <p:outputLabel value="Proyecto:"/>
+                        <h:selectOneMenu value="#{facturaController.selected.codProyecto}">
+                            <f:selectItem itemLabel="-- Seleccione Proyecto --" itemValue=""/>
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Proveedor:"/>
+                        <p:inputText value="#{facturaController.selected.proveedor}" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Concepto: *"/>
+                        <p:inputText value="#{facturaController.selected.concepto}" required="true" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Importe (€): *"/>
+                        <p:inputText value="#{facturaController.selected.importe}" required="true" size="15">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </p:inputText>
+                        <p:outputLabel value="IVA (%):"/>
+                        <p:inputText value="#{facturaController.selected.iva}" size="5">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </p:inputText>
+                        <p:outputLabel value="Fecha Factura:"/>
+                        <p:calendar value="#{facturaController.selected.fechaFactura}" pattern="dd/MM/yyyy" showOn="button"/>
+                        <p:outputLabel value="Fecha Pago:"/>
+                        <p:calendar value="#{facturaController.selected.fechaPago}" pattern="dd/MM/yyyy" showOn="button"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{facturaController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{facturaController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

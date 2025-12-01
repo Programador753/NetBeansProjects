@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Listado de Proyectos"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{proyectoController.items}" var="item" 
+                             rows="10" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} proyectos"
+                             rowsPerPageTemplate="5,10,25,50"
+                             emptyMessage="No hay proyectos registrados"
+                             tableStyle="table-layout:auto"
+                             style="margin-top:20px;">
+                    
+                    <!-- Codigo del Proyecto -->
+                    <p:column headerText="Codigo" sortBy="#{item.codigo}" style="text-align:center; width:90px;">
+                        <h:outputText value="#{item.codigo}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Titulo -->
+                    <p:column headerText="Titulo" sortBy="#{item.titulo}">
+                        <h:outputText value="#{item.titulo}"/>
+                    </p:column>
+                    
+                    <!-- Pais -->
+                    <p:column headerText="Pais" sortBy="#{item.pais}" style="text-align:center; width:60px;">
+                        <h:outputText value="#{item.pais}"/>
+                    </p:column>
+                    
+                    <!-- Anyo -->
+                    <p:column headerText="Anyo" sortBy="#{item.anyo}" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.anyo}" style="font-weight:bold;"/>
+                    </p:column>
+                    
+                    <!-- Inspectoria -->
+                    <p:column headerText="Insp." sortBy="#{item.inspectoria.codInspectoria}" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.inspectoria.codInspectoria}" rendered="#{item.inspectoria ne null}"/>
+                    </p:column>
+                    
+                    <!-- Dinero Concedido -->
+                    <p:column headerText="Concedido" sortBy="#{item.dineroConcedido}" style="text-align:right; width:100px;">
+                        <h:outputText value="#{item.dineroConcedido}" styleClass="currency">
+                            <f:convertNumber type="number" groupingUsed="true" minFractionDigits="0" maxFractionDigits="0"/>
+                        </h:outputText>
+                        <h:outputText value=" EUR" style="font-size:0.8em;"/>
+                    </p:column>
+                    
+                    <!-- Fecha Inicio -->
+                    <p:column headerText="Inicio" sortBy="#{item.fechaInicio}" style="text-align:center; width:80px;">
+                        <h:outputText value="#{item.fechaInicio}">
+                            <f:convertDateTime pattern="dd/MM/yy"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <!-- Aprobado -->
+                    <p:column headerText="Apr." style="text-align:center; width:40px;">
+                        <h:outputText value="Si" rendered="#{item.aprobado eq true}" style="color:#4CAF50; font-weight:bold;"/>
+                        <h:outputText value="No" rendered="#{item.aprobado eq false or item.aprobado eq null}" style="color:#f44336;"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
+                        <h:commandLink action="#{proyectoController.prepareView}" value="Ver" 
+                                       title="Ver detalles" style="margin-right:5px;"/>
+                        <h:commandLink action="#{proyectoController.prepareEdit}" value="Editar" 
+                                       title="Editar proyecto" style="margin-right:5px;"/>
+                        <h:commandLink action="#{proyectoController.destroy}" value="X" 
+                                       title="Eliminar proyecto" style="color:red;"
+                                       onclick="return confirm('Esta seguro de eliminar este proyecto?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value="Nuevo Proyecto" action="#{proyectoController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value="Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Detalle Pais: #{paisController.selected.nomPais}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel header="Informacion del Pais">
+                    <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                        
+                        <h:outputText value="Codigo ISO:" style="font-weight:bold;"/>
+                        <h:outputText value="#{paisController.selected.codPais}" style="font-size:1.2em; color:#1a237e;"/>
+                        
+                        <h:outputText value="Codigo Telefono:" style="font-weight:bold;"/>
+                        <h:outputText value="+#{paisController.selected.codPaisTelefono}" 
+                                      rendered="#{paisController.selected.codPaisTelefono ne null}"/>
+                        
+                        <h:outputText value="Nombre (Espanol):" style="font-weight:bold;"/>
+                        <h:outputText value="#{paisController.selected.nomPais}" style="font-size:1.1em;"/>
+                        
+                        <h:outputText value="Nombre (Ingles):" style="font-weight:bold;"/>
+                        <h:outputText value="#{paisController.selected.nomPaisIngles}"/>
+                        
+                        <h:outputText value="Subcontinente:" style="font-weight:bold;"/>
+                        <h:outputText value="#{paisController.selected.subContinente}"/>
+                        
+                        <h:outputText value="Region:" style="font-weight:bold;"/>
+                        <h:outputText value="#{paisController.selected.codRegion}"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value="Editar" action="#{paisController.prepareEdit}" 
+                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
+                    <p:commandButton value="Eliminar" action="#{paisController.destroy}" 
+                                     icon="pi pi-trash" styleClass="ui-button-danger"
+                                     onclick="return confirm('Esta seguro de eliminar este pais?');"/>
+                    <p:commandButton value="Volver al Listado" action="#{paisController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

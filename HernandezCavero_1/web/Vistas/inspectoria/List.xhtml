@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Listado de Inspectorias"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{inspectoriaController.items}" var="item" 
+                             rows="10" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} inspectorias"
+                             rowsPerPageTemplate="5,10,25,50"
+                             emptyMessage="No hay inspectorias registradas"
+                             tableStyle="table-layout:auto"
+                             style="margin-top:20px;">
+                    
+                    <!-- Codigo -->
+                    <p:column headerText="Cod." sortBy="#{item.codInspectoria}" style="text-align:center; width:60px;">
+                        <h:outputText value="#{item.codInspectoria}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre -->
+                    <p:column headerText="Nombre Inspectoria" sortBy="#{item.nomInspectoria}">
+                        <h:outputText value="#{item.nomInspectoria}"/>
+                    </p:column>
+                    
+                    <!-- Socio Local -->
+                    <p:column headerText="Socio" sortBy="#{item.socioLocal}" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.socioLocal}"/>
+                    </p:column>
+                    
+                    <!-- Email OPD -->
+                    <p:column headerText="Email Contacto" sortBy="#{item.opdContactoMail}" style="width:180px;">
+                        <h:outputLink value="mailto:#{item.opdContactoMail}" rendered="#{item.opdContactoMail ne null}">
+                            <h:outputText value="#{item.opdContactoMail}"/>
+                        </h:outputLink>
+                    </p:column>
+                    
+                    <!-- Numero de Sedes -->
+                    <p:column headerText="Sedes" style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.sedeList.size()}" rendered="#{item.sedeList ne null}" 
+                                      style="font-weight:bold; color:#4CAF50;"/>
+                        <h:outputText value="0" rendered="#{item.sedeList eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Numero de Proyectos -->
+                    <p:column headerText="Proy." style="text-align:center; width:50px;">
+                        <h:outputText value="#{item.proyectoList.size()}" rendered="#{item.proyectoList ne null}" 
+                                      style="font-weight:bold; color:#2196F3;"/>
+                        <h:outputText value="0" rendered="#{item.proyectoList eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
+                        <h:commandLink action="#{inspectoriaController.prepareView}" value="Ver" 
+                                       title="Ver detalles" style="margin-right:5px;"/>
+                        <h:commandLink action="#{inspectoriaController.prepareEdit}" value="Editar" 
+                                       title="Editar inspectoria" style="margin-right:5px;"/>
+                        <h:commandLink action="#{inspectoriaController.destroy}" value="X" 
+                                       title="Eliminar inspectoria" style="color:red;"
+                                       onclick="return confirm('Esta seguro de eliminar esta inspectoria?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value="Nueva Inspectoria" action="#{inspectoriaController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value="Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

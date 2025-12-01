@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">Nuevo Pais</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header="Datos del Pais">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Codigo ISO: *"/>
+                        <p:inputText value="#{paisController.selected.codPais}" required="true" size="4" maxlength="2"/>
+                        <p:outputLabel value="Nombre (Espanol): *"/>
+                        <p:inputText value="#{paisController.selected.nomPais}" required="true" size="50" style="width:300px;"/>
+                        <p:outputLabel value="Nombre (Ingles):"/>
+                        <p:inputText value="#{paisController.selected.nomPaisIngles}" size="50" style="width:300px;"/>
+                        <p:outputLabel value="Codigo Telefono:"/>
+                        <p:inputText value="#{paisController.selected.codPaisTelefono}" size="5"/>
+                        <p:outputLabel value="Subcontinente:"/>
+                        <p:inputText value="#{paisController.selected.subContinente}" size="5"/>
+                        <p:outputLabel value="Region:"/>
+                        <p:inputText value="#{paisController.selected.codRegion}" size="5"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value="Guardar" action="#{paisController.create}" icon="pi pi-save"/>
+                <p:commandButton value="Volver" action="#{paisController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

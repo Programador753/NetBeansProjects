@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Detalle ODS #{odsprincipalController.selected.codOds}</ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel header=" Objetivo de Desarrollo Sostenible">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value="Código ODS:" style="font-weight:bold;"/>
+                        <h:outputText value="ODS #{odsprincipalController.selected.codOds}" style="font-size:1.3em; color:#1a237e;"/>
+                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
+                        <h:outputText value="#{odsprincipalController.selected.nomOds}"/>
+                    </h:panelGrid>
+                </p:panel>
+                
+                <p:panel header=" Proyectos con este ODS" style="margin-top:15px;">
+                    <p:dataTable value="#{odsprincipalController.selected.proyectoList}" var="proyecto"
+                                 emptyMessage="No hay proyectos asociados" rows="5" paginator="true"
+                                 rendered="#{not empty odsprincipalController.selected.proyectoList}">
+                        <p:column headerText="Código" width="120"><h:outputText value="#{proyecto.codigo}"/></p:column>
+                        <p:column headerText="Título"><h:outputText value="#{proyecto.titulo}"/></p:column>
+                        <p:column headerText="Año" width="60"><h:outputText value="#{proyecto.anyo}"/></p:column>
+                    </p:dataTable>
+                    <h:outputText value="No hay proyectos asociados" rendered="#{empty odsprincipalController.selected.proyectoList}" style="color:#999;"/>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Editar" action="#{odsprincipalController.prepareEdit}" icon="pi pi-pencil"/>
+                <p:commandButton value=" Eliminar" action="#{odsprincipalController.destroy}" onclick="return confirm('¿Eliminar?');"/>
+                <p:commandButton value=" Volver" action="#{odsprincipalController.prepareList}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

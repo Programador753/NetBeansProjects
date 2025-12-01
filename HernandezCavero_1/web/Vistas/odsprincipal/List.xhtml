@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value=" Objetivos de Desarrollo Sostenible (ODS)"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{odsprincipalController.items}" var="item" 
+                             rows="17" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} ODS"
+                             emptyMessage="No hay ODS registrados"
+                             style="margin-top:20px;">
+                    
+                    <!-- Código ODS -->
+                    <p:column headerText="ODS" sortBy="#{item.codOds}" width="100" style="text-align:center">
+                        <h:outputText value="ODS #{item.codOds}" style="font-weight:bold; font-size:1.2em; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre/Descripción -->
+                    <p:column headerText="Objetivo" sortBy="#{item.nomOds}">
+                        <h:outputText value="#{item.nomOds}"/>
+                    </p:column>
+                    
+                    <!-- Número de Proyectos -->
+                    <p:column headerText="Proyectos Asociados" width="150" style="text-align:center">
+                        <h:outputText value="#{item.proyectoList.size()}" rendered="#{item.proyectoList ne null}" 
+                                      style="font-weight:bold; color:#4CAF50; font-size:1.1em;"/>
+                        <h:outputText value="0" rendered="#{item.proyectoList eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
+                        <h:commandLink action="#{odsprincipalController.prepareView}" value=" Ver" 
+                                       title="Ver detalles" style="margin-right:8px;"/>
+                        <h:commandLink action="#{odsprincipalController.prepareEdit}" value=" Editar" 
+                                       title="Editar ODS" style="margin-right:8px;"/>
+                        <h:commandLink action="#{odsprincipalController.destroy}" value=" Eliminar" 
+                                       title="Eliminar ODS"
+                                       onclick="return confirm('¿Está seguro de eliminar este ODS?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value=" Nuevo ODS" action="#{odsprincipalController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value=" Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

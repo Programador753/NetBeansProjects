@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Editar Proyecto: #{proyectoController.selected.codigo}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <h:form>
+                <p:tabView>
+                    <!-- Tab 1: Datos Basicos -->
+                    <p:tab title="Datos Basicos">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Codigo: *"/>
+                            <p:inputText value="#{proyectoController.selected.codigo}" 
+                                         required="true" size="15"/>
+                            
+                            <p:outputLabel value="Titulo: *"/>
+                            <p:inputText value="#{proyectoController.selected.titulo}" 
+                                         required="true" size="60" style="width:400px;"/>
+                            
+                            <p:outputLabel value="Descripcion:"/>
+                            <p:inputTextarea value="#{proyectoController.selected.descripcion}" 
+                                             rows="3" cols="60" style="width:400px;"/>
+                            
+                            <p:outputLabel value="ONG:"/>
+                            <p:selectOneMenu value="#{proyectoController.selected.ong}">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItem itemLabel="MS - Misiones Salesianas" itemValue="MS"/>
+                                <f:selectItem itemLabel="JyD - Jovenes y Desarrollo" itemValue="JYD"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Anyo: *"/>
+                            <p:inputText value="#{proyectoController.selected.anyo}" 
+                                         required="true" size="4"/>
+                            
+                            <p:outputLabel value="Pais:"/>
+                            <p:inputText value="#{proyectoController.selected.pais}" 
+                                         size="2" maxlength="2"/>
+                            
+                            <p:outputLabel value="Localizacion:"/>
+                            <p:inputText value="#{proyectoController.selected.localizacion}" 
+                                         size="50" style="width:300px;"/>
+                            
+                            <p:outputLabel value="Instrumento:"/>
+                            <p:inputText value="#{proyectoController.selected.instrumento}" 
+                                         size="10"/>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 2: Organizacion -->
+                    <p:tab title="Organizacion">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Inspectoria:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.inspectoria}">
+                                <f:selectItem itemLabel="-- Seleccione Inspectoria --" itemValue=""/>
+                                <f:selectItems value="#{inspectoriaController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Sede:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.sede}">
+                                <f:selectItem itemLabel="-- Seleccione Sede --" itemValue=""/>
+                                <f:selectItems value="#{sedeController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Socio Local:"/>
+                            <p:selectOneMenu value="#{proyectoController.selected.socioLocal}">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItem itemLabel="SDB - Salesiano" itemValue="SDB"/>
+                                <f:selectItem itemLabel="FMA - Hija de Maria Auxiliadora" itemValue="FMA"/>
+                                <f:selectItem itemLabel="HDS - Hermana de Don Bosco" itemValue="HDS"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Tecnico Formulacion:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.tecFor}">
+                                <f:selectItem itemLabel="-- Seleccione Tecnico --" itemValue=""/>
+                                <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Tecnico Seguimiento:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.tecSeg}">
+                                <f:selectItem itemLabel="-- Seleccione Tecnico --" itemValue=""/>
+                                <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 3: Financiacion -->
+                    <p:tab title="Financiacion">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Costo Total (EUR):"/>
+                            <p:inputText value="#{proyectoController.selected.costoTotal}" size="15">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            </p:inputText>
+                            
+                            <p:outputLabel value="Dinero Solicitado (EUR):"/>
+                            <p:inputText value="#{proyectoController.selected.dineroSolicitado}" size="15">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            </p:inputText>
+                            
+                            <p:outputLabel value="Dinero Concedido (EUR):"/>
+                            <p:inputText value="#{proyectoController.selected.dineroConcedido}" size="15">
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            </p:inputText>
+                            
+                            <p:outputLabel value="Tipo Entidad:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.tipoEntidad}">
+                                <f:selectItem itemLabel="-- Seleccione Tipo --" itemValue=""/>
+                                <f:selectItems value="#{tipoentidadController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Entidad Financiadora:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.entidad}">
+                                <f:selectItem itemLabel="-- Seleccione Entidad --" itemValue=""/>
+                                <f:selectItems value="#{entidadController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Aprobado?:"/>
+                            <p:selectBooleanCheckbox value="#{proyectoController.selected.aprobado}"/>
+                            
+                            <p:outputLabel value="Fecha Concesion:"/>
+                            <p:calendar value="#{proyectoController.selected.fechaConcesion}" 
+                                        pattern="dd/MM/yyyy" showOn="button"/>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 4: Fechas y Duracion -->
+                    <p:tab title="Fechas">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Fecha Inicio:"/>
+                            <p:calendar value="#{proyectoController.selected.fechaInicio}" 
+                                        pattern="dd/MM/yyyy" showOn="button"/>
+                            
+                            <p:outputLabel value="Fecha Fin:"/>
+                            <p:calendar value="#{proyectoController.selected.fechaFin}" 
+                                        pattern="dd/MM/yyyy" showOn="button"/>
+                            
+                            <p:outputLabel value="Duracion Real (meses):"/>
+                            <p:inputText value="#{proyectoController.selected.duracionReal}" size="4"/>
+                            
+                            <p:outputLabel value="Fecha Cierre:"/>
+                            <p:calendar value="#{proyectoController.selected.fechaCierre}" 
+                                        pattern="dd/MM/yyyy" showOn="button"/>
+                            
+                            <p:outputLabel value="Cerrado?:"/>
+                            <p:selectBooleanCheckbox value="#{proyectoController.selected.cerrado}"/>
+                            
+                            <p:outputLabel value="Extinguido?:"/>
+                            <p:selectBooleanCheckbox value="#{proyectoController.selected.extinguido}"/>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 5: Clasificacion -->
+                    <p:tab title="Clasificacion">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Sector MS:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.sectorMS}">
+                                <f:selectItem itemLabel="-- Seleccione Sector --" itemValue=""/>
+                                <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Subsector MS:"/>
+                            <h:selectOneMenu value="#{proyectoController.selected.subsectorMS}">
+                                <f:selectItem itemLabel="-- Seleccione Subsector --" itemValue=""/>
+                                <f:selectItems value="#{subsectorController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel value="Target:"/>
+                            <p:selectOneMenu value="#{proyectoController.selected.target}">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItem itemLabel="GRAL - General" itemValue="GRAL"/>
+                                <f:selectItem itemLabel="INF - Infancia" itemValue="INF"/>
+                                <f:selectItem itemLabel="JUV - Juventud" itemValue="JUV"/>
+                            </p:selectOneMenu>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 6: Beneficiarios -->
+                    <p:tab title="Beneficiarios">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Num Total Beneficiarios:"/>
+                            <p:inputText value="#{proyectoController.selected.numBeneficiarios}" size="8"/>
+                            
+                            <p:outputLabel value="Beneficiarios Mujeres:"/>
+                            <p:inputText value="#{proyectoController.selected.numBeneficiariosMujeres}" size="8"/>
+                            
+                            <p:outputLabel value="Beneficiarios Hombres:"/>
+                            <p:inputText value="#{proyectoController.selected.numBeneficiariosHombres}" size="8"/>
+                            
+                            <p:outputLabel value="Beneficiarios Indirectos:"/>
+                            <p:inputText value="#{proyectoController.selected.numBeneficiarioInd}" size="8"/>
+                            
+                            <p:outputLabel value="Descripcion Beneficiarios:"/>
+                            <p:inputTextarea value="#{proyectoController.selected.descripcionBeneficiarios}" 
+                                             rows="3" cols="50"/>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 7: Comentarios -->
+                    <p:tab title="Comentarios">
+                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                            
+                            <p:outputLabel value="Comentarios:"/>
+                            <p:inputTextarea value="#{proyectoController.selected.comentarios}" 
+                                             rows="5" cols="60" style="width:500px;"/>
+                            
+                            <p:outputLabel value="Justificacion:"/>
+                            <p:inputTextarea value="#{proyectoController.selected.justificacion}" 
+                                             rows="5" cols="60" style="width:500px;"/>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                </p:tabView>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px; margin-top:20px;">
+                    <p:commandButton value="Guardar Cambios" action="#{proyectoController.update}" 
+                                     icon="pi pi-save" styleClass="ui-button-success"/>
+                    <p:commandButton value="Ver Detalle" action="#{proyectoController.prepareView}" 
+                                     icon="pi pi-eye" styleClass="ui-button-info"/>
+                    <p:commandButton value="Volver al Listado" action="#{proyectoController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value=" Detalle Misionero: #{misioneroController.selected.nomMisionero}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel header=" Información del Misionero">
+                    <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                        
+                        <h:outputText value="Código:" style="font-weight:bold;"/>
+                        <h:outputText value="#{misioneroController.selected.codMisionero}" style="font-size:1.2em; color:#1a237e;"/>
+                        
+                        <h:outputText value="Tipo:" style="font-weight:bold;"/>
+                        <h:panelGroup>
+                            <span class="badge badge-info" style="#{misioneroController.selected.tipoMisionero eq 'SDB' ? '' : 'display:none'}">SDB</span>
+                            <span class="badge badge-success" style="#{misioneroController.selected.tipoMisionero eq 'FMA' ? '' : 'display:none'}">FMA</span>
+                            <span class="badge badge-warning" style="#{misioneroController.selected.tipoMisionero eq 'HDS' ? '' : 'display:none'}">HDS</span>
+                            <h:outputText value="#{misioneroController.selected.tipoMisionero}" 
+                                          rendered="#{misioneroController.selected.tipoMisionero ne 'SDB' and misioneroController.selected.tipoMisionero ne 'FMA' and misioneroController.selected.tipoMisionero ne 'HDS'}"/>
+                        </h:panelGroup>
+                        
+                        <h:outputText value="Nombre Completo:" style="font-weight:bold;"/>
+                        <h:outputText value="#{misioneroController.selected.nomMisionero}" style="grid-column: span 3; font-size:1.1em;"/>
+                        
+                        <h:outputText value="Email Principal:" style="font-weight:bold;"/>
+                        <h:outputLink value="mailto:#{misioneroController.selected.mail1}" 
+                                      rendered="#{misioneroController.selected.mail1 ne null}">
+                            <h:outputText value="#{misioneroController.selected.mail1}"/>
+                        </h:outputLink>
+                        <h:outputText value="-" rendered="#{misioneroController.selected.mail1 eq null}" style="color:#999;"/>
+                        
+                        <h:outputText value="Email Secundario:" style="font-weight:bold;"/>
+                        <h:outputLink value="mailto:#{misioneroController.selected.mail2}" 
+                                      rendered="#{misioneroController.selected.mail2 ne null}">
+                            <h:outputText value="#{misioneroController.selected.mail2}"/>
+                        </h:outputLink>
+                        <h:outputText value="-" rendered="#{misioneroController.selected.mail2 eq null}" style="color:#999;"/>
+                        
+                        <h:outputText value="Teléfono:" style="font-weight:bold;"/>
+                        <h:outputText value="#{misioneroController.selected.telefono}"/>
+                        
+                        <h:outputText value="Código Misión:" style="font-weight:bold;"/>
+                        <h:outputText value="#{misioneroController.selected.codMision}"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value=" Editar" action="#{misioneroController.prepareEdit}" 
+                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
+                    <p:commandButton value=" Eliminar" action="#{misioneroController.destroy}" 
+                                     icon="pi pi-trash" styleClass="ui-button-danger"
+                                     onclick="return confirm('¿Está seguro de eliminar este misionero?');"/>
+                    <p:commandButton value=" Volver al Listado" action="#{misioneroController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

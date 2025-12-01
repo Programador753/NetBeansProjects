@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nuevo Tipo de Cambio</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header="💱 Datos del Cambio de Moneda">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Moneda Origen:"/>
+                        <h:selectOneMenu value="#{cambiomonedaController.selected.codMonedaOrigen}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItems value="#{monedaController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Moneda Destino:"/>
+                        <h:selectOneMenu value="#{cambiomonedaController.selected.codMonedaDestino}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItems value="#{monedaController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Tipo de Cambio: *"/>
+                        <p:inputText value="#{cambiomonedaController.selected.tipoCambio}" required="true" size="15">
+                            <f:convertNumber minFractionDigits="6" maxFractionDigits="6"/>
+                        </p:inputText>
+                        <p:outputLabel value="Fecha:"/>
+                        <p:calendar value="#{cambiomonedaController.selected.fecha}" pattern="dd/MM/yyyy" showOn="button"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{cambiomonedaController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{cambiomonedaController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

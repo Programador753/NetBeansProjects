@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Detalle Tecnico: #{tecnicoController.selected.nomTecnico}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel header="Informacion del Tecnico">
+                    <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
+                        
+                        <h:outputText value="Codigo:" style="font-weight:bold;"/>
+                        <h:outputText value="#{tecnicoController.selected.codTecnico}" style="font-size:1.2em; color:#1a237e;"/>
+                        
+                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
+                        <h:outputText value="#{tecnicoController.selected.nomTecnico}" style="font-size:1.1em;"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <p:panel header="Proyectos de Formulacion" style="margin-top:15px;">
+                    <p:dataTable value="#{tecnicoController.selected.proyectoList}" var="proy"
+                                 emptyMessage="No hay proyectos de formulacion asignados"
+                                 rendered="#{not empty tecnicoController.selected.proyectoList}"
+                                 rows="5" paginator="true">
+                        <p:column headerText="Codigo" width="100">
+                            <h:outputText value="#{proy.codigo}"/>
+                        </p:column>
+                        <p:column headerText="Titulo">
+                            <h:outputText value="#{proy.titulo}"/>
+                        </p:column>
+                        <p:column headerText="Pais" width="80">
+                            <h:outputText value="#{proy.pais}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <h:outputText value="No hay proyectos de formulacion asignados" 
+                                  rendered="#{empty tecnicoController.selected.proyectoList}" style="color:#999;"/>
+                </p:panel>
+                
+                <p:panel header="Proyectos de Seguimiento" style="margin-top:15px;">
+                    <p:dataTable value="#{tecnicoController.selected.proyectoList1}" var="proy"
+                                 emptyMessage="No hay proyectos de seguimiento asignados"
+                                 rendered="#{not empty tecnicoController.selected.proyectoList1}"
+                                 rows="5" paginator="true">
+                        <p:column headerText="Codigo" width="100">
+                            <h:outputText value="#{proy.codigo}"/>
+                        </p:column>
+                        <p:column headerText="Titulo">
+                            <h:outputText value="#{proy.titulo}"/>
+                        </p:column>
+                        <p:column headerText="Pais" width="80">
+                            <h:outputText value="#{proy.pais}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <h:outputText value="No hay proyectos de seguimiento asignados" 
+                                  rendered="#{empty tecnicoController.selected.proyectoList1}" style="color:#999;"/>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value="Editar" action="#{tecnicoController.prepareEdit}" 
+                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
+                    <p:commandButton value="Eliminar" action="#{tecnicoController.destroy}" 
+                                     icon="pi pi-trash" styleClass="ui-button-danger"
+                                     onclick="return confirm('Esta seguro de eliminar este tecnico?');"/>
+                    <p:commandButton value="Volver al Listado" action="#{tecnicoController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

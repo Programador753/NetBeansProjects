@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Listado de Tecnicos"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{tecnicoController.items}" var="item" 
+                             rows="10" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} tecnicos"
+                             rowsPerPageTemplate="5,10,25"
+                             emptyMessage="No hay tecnicos registrados"
+                             style="margin-top:20px;">
+                    
+                    <!-- Codigo -->
+                    <p:column headerText="Codigo" sortBy="#{item.codTecnico}" width="100" style="text-align:center">
+                        <h:outputText value="#{item.codTecnico}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre -->
+                    <p:column headerText="Nombre" sortBy="#{item.nomTecnico}">
+                        <h:outputText value="#{item.nomTecnico}"/>
+                    </p:column>
+                    
+                    <!-- Proyectos Formulacion -->
+                    <p:column headerText="Proy. Formulacion" width="120" style="text-align:center">
+                        <h:outputText value="#{item.proyectoList.size()}" rendered="#{item.proyectoList ne null}" 
+                                      style="font-weight:bold; color:#4CAF50;"/>
+                        <h:outputText value="0" rendered="#{item.proyectoList eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Proyectos Seguimiento -->
+                    <p:column headerText="Proy. Seguimiento" width="120" style="text-align:center">
+                        <h:outputText value="#{item.proyectoList1.size()}" rendered="#{item.proyectoList1 ne null}" 
+                                      style="font-weight:bold; color:#2196F3;"/>
+                        <h:outputText value="0" rendered="#{item.proyectoList1 eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
+                        <h:commandLink action="#{tecnicoController.prepareView}" value="Ver" 
+                                       title="Ver detalles" style="margin-right:8px;"/>
+                        <h:commandLink action="#{tecnicoController.prepareEdit}" value="Editar" 
+                                       title="Editar tecnico" style="margin-right:8px;"/>
+                        <h:commandLink action="#{tecnicoController.destroy}" value="Eliminar" 
+                                       title="Eliminar tecnico"
+                                       onclick="return confirm('Esta seguro de eliminar este tecnico?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value="Nuevo Tecnico" action="#{tecnicoController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value="Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

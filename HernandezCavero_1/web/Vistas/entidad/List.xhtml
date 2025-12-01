@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value=" Listado de Entidades Financiadoras"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                
+                <p:dataTable value="#{entidadController.items}" var="item" 
+                             rows="10" 
+                             paginator="true" 
+                             paginatorPosition="both"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} entidades"
+                             rowsPerPageTemplate="5,10,25,50"
+                             emptyMessage="No hay entidades registradas"
+                             style="margin-top:20px;">
+                    
+                    <!-- Código -->
+                    <p:column headerText="Código" sortBy="#{item.codigo}" width="100" style="text-align:center">
+                        <h:outputText value="#{item.codigo}" style="font-weight:bold; color:#1a237e;"/>
+                    </p:column>
+                    
+                    <!-- Nombre -->
+                    <p:column headerText="Nombre de la Entidad" sortBy="#{item.nomEntidad}">
+                        <h:outputText value="#{item.nomEntidad}"/>
+                    </p:column>
+                    
+                    <!-- Tipo Entidad -->
+                    <p:column headerText="Tipo" sortBy="#{item.tipoEntidad}" width="150" style="text-align:center">
+                        <h:outputText value="#{item.tipoEntidad}" rendered="#{item.tipoEntidad ne null}"/>
+                        <h:outputText value="-" rendered="#{item.tipoEntidad eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Número de Proyectos -->
+                    <p:column headerText="Proyectos Financiados" width="150" style="text-align:center">
+                        <h:outputText value="#{item.proyectoList.size()}" rendered="#{item.proyectoList ne null}" 
+                                      style="font-weight:bold; color:#4CAF50;"/>
+                        <h:outputText value="0" rendered="#{item.proyectoList eq null}" style="color:#999;"/>
+                    </p:column>
+                    
+                    <!-- Acciones -->
+                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
+                        <h:commandLink action="#{entidadController.prepareView}" value=" Ver" 
+                                       title="Ver detalles" style="margin-right:8px;"/>
+                        <h:commandLink action="#{entidadController.prepareEdit}" value=" Editar" 
+                                       title="Editar entidad" style="margin-right:8px;"/>
+                        <h:commandLink action="#{entidadController.destroy}" value=" Eliminar" 
+                                       title="Eliminar entidad"
+                                       onclick="return confirm('¿Está seguro de eliminar esta entidad?');"/>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br />
+                <p:commandButton value=" Nueva Entidad" action="#{entidadController.prepareCreate}" 
+                                 icon="pi pi-plus" styleClass="ui-button-success"/>
+                <br /><br />
+                <h:link outcome="/index" value=" Volver al Inicio"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

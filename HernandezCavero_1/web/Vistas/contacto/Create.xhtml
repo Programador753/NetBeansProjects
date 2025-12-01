@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Nuevo Contacto</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header=" Datos del Contacto">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Nombre: *"/>
+                        <p:inputText value="#{contactoController.selected.nombre}" required="true" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Apellidos:"/>
+                        <p:inputText value="#{contactoController.selected.apellidos}" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Cargo:"/>
+                        <p:inputText value="#{contactoController.selected.cargo}" size="50"/>
+                        <p:outputLabel value="Email:"/>
+                        <p:inputText value="#{contactoController.selected.email}" size="50"/>
+                        <p:outputLabel value="Teléfono:"/>
+                        <p:inputText value="#{contactoController.selected.telefono}" size="20"/>
+                        <p:outputLabel value="Organización:"/>
+                        <p:inputText value="#{contactoController.selected.organizacion}" size="60" style="width:400px;"/>
+                        <p:outputLabel value="Notas:"/>
+                        <p:inputTextarea value="#{contactoController.selected.notas}" rows="3" cols="50"/>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{contactoController.create}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{contactoController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Detalle del Proyecto: #{proyectoController.selected.codigo}"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <h:form>
+                <p:tabView>
+                    <!-- Tab 1: Informacion General -->
+                    <p:tab title="Informacion General">
+                        <p:panel header="Datos del Proyecto">
+                            <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                                
+                                <h:outputText value="Codigo:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.codigo}" style="color:#1a237e; font-size:1.1em;"/>
+                                
+                                <h:outputText value="Anyo:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.anyo}" style="font-weight:bold;"/>
+                                
+                                <h:outputText value="Titulo:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.titulo}" style="grid-column: span 3;"/>
+                                
+                                <h:outputText value="Descripcion:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.descripcion}" style="grid-column: span 3;"/>
+                                
+                                <h:outputText value="ONG:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.ong}"/>
+                                
+                                <h:outputText value="Pais:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.pais}"/>
+                                
+                                <h:outputText value="Localizacion:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.localizacion}" style="grid-column: span 3;"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- Tab 2: Organizacion -->
+                    <p:tab title="Organizacion">
+                        <p:panel header="Informacion Organizativa">
+                            <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                                
+                                <h:outputText value="Inspectoria:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.inspectoria.codInspectoria} - #{proyectoController.selected.inspectoria.nomInspectoria}" 
+                                              rendered="#{proyectoController.selected.inspectoria ne null}"/>
+                                <h:outputText value="-" rendered="#{proyectoController.selected.inspectoria eq null}" style="color:#999;"/>
+                                
+                                <h:outputText value="Sede:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.sede.nomSede}" 
+                                              rendered="#{proyectoController.selected.sede ne null}"/>
+                                <h:outputText value="-" rendered="#{proyectoController.selected.sede eq null}" style="color:#999;"/>
+                                
+                                <h:outputText value="Socio Local:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.socioLocal}"/>
+                                
+                                <h:outputText value="Tecnico Formulacion:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.tecFor}" rendered="#{proyectoController.selected.tecFor ne null}"/>
+                                <h:outputText value="-" rendered="#{proyectoController.selected.tecFor eq null}" style="color:#999;"/>
+                                
+                                <h:outputText value="Tecnico Seguimiento:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.tecSeg}" rendered="#{proyectoController.selected.tecSeg ne null}"/>
+                                <h:outputText value="-" rendered="#{proyectoController.selected.tecSeg eq null}" style="color:#999;"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- Tab 3: Financiacion -->
+                    <p:tab title="Financiacion">
+                        <p:panel header="Informacion Financiera">
+                            <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                                
+                                <h:outputText value="Costo Total:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.costoTotal}" styleClass="currency">
+                                    <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Dinero Solicitado:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.dineroSolicitado}" styleClass="currency">
+                                    <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Dinero Concedido:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.dineroConcedido}" 
+                                              style="font-weight:bold; color:#4CAF50; font-size:1.2em;">
+                                    <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Aprobado:" style="font-weight:bold;"/>
+                                <h:outputText value="Si" rendered="#{proyectoController.selected.aprobado eq true}" style="color:#4CAF50; font-weight:bold;"/>
+                                <h:outputText value="No" rendered="#{proyectoController.selected.aprobado eq false or proyectoController.selected.aprobado eq null}" style="color:#f44336;"/>
+                                
+                                <h:outputText value="Fecha Concesion:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.fechaConcesion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Entidad:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.entidad}" rendered="#{proyectoController.selected.entidad ne null}"/>
+                                <h:outputText value="-" rendered="#{proyectoController.selected.entidad eq null}" style="color:#999;"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- Tab 4: Fechas -->
+                    <p:tab title="Fechas">
+                        <p:panel header="Calendario del Proyecto">
+                            <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                                
+                                <h:outputText value="Fecha Inicio:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.fechaInicio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Fecha Fin:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.fechaFin}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                
+                                <h:outputText value="Duracion Real:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.duracionReal} meses"/>
+                                
+                                <h:outputText value="Cerrado:" style="font-weight:bold;"/>
+                                <h:outputText value="Si" rendered="#{proyectoController.selected.cerrado eq true}" style="color:#f44336; font-weight:bold;"/>
+                                <h:outputText value="No" rendered="#{proyectoController.selected.cerrado eq false or proyectoController.selected.cerrado eq null}" style="color:#4CAF50;"/>
+                                
+                                <h:outputText value="Fecha Cierre:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.fechaCierre}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- Tab 5: Beneficiarios -->
+                    <p:tab title="Beneficiarios">
+                        <p:panel header="Informacion de Beneficiarios">
+                            <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                                
+                                <h:outputText value="Total Beneficiarios:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.numBeneficiarios}" 
+                                              style="font-weight:bold; font-size:1.3em; color:#2196F3;"/>
+                                
+                                <h:outputText value="Beneficiarios Indirectos:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.numBeneficiarioInd}"/>
+                                
+                                <h:outputText value="Mujeres:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.numBeneficiariosMujeres}" style="color:#E91E63;"/>
+                                
+                                <h:outputText value="Hombres:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.numBeneficiariosHombres}" style="color:#2196F3;"/>
+                                
+                                <h:outputText value="Descripcion:" style="font-weight:bold;"/>
+                                <h:outputText value="#{proyectoController.selected.descripcionBeneficiarios}" style="grid-column: span 3;"/>
+                                
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- Tab 6: ODS y CRS -->
+                    <p:tab title="ODS y CRS">
+                        <h:panelGrid columns="2" cellpadding="20" style="width:100%;">
+                            
+                            <p:panel header="Objetivos de Desarrollo Sostenible (ODS)">
+                                <h:selectManyListbox style="width:100%; height:200px; border:1px solid #ddd;" 
+                                                     disabled="true"
+                                                     rendered="#{not empty proyectoController.selected.odsprincipalList}">
+                                    <f:selectItems value="#{proyectoController.selected.odsprincipalList}" 
+                                                   var="ods" 
+                                                   itemValue="#{ods.codOds}" 
+                                                   itemLabel="ODS #{ods.codOds}"/>
+                                </h:selectManyListbox>
+                                <h:outputText value="No hay ODS asociados" 
+                                              rendered="#{empty proyectoController.selected.odsprincipalList}" 
+                                              style="color:#999;"/>
+                            </p:panel>
+                            
+                            <p:panel header="Codigos CRS">
+                                <h:selectManyListbox style="width:100%; height:200px; border:1px solid #ddd;" 
+                                                     disabled="true"
+                                                     rendered="#{not empty proyectoController.selected.crsList}">
+                                    <f:selectItems value="#{proyectoController.selected.crsList}" 
+                                                   var="crs" 
+                                                   itemValue="#{crs.codCrs}" 
+                                                   itemLabel="#{crs.codCrs}"/>
+                                </h:selectManyListbox>
+                                <h:outputText value="No hay CRS asociados" 
+                                              rendered="#{empty proyectoController.selected.crsList}" 
+                                              style="color:#999;"/>
+                            </p:panel>
+                            
+                        </h:panelGrid>
+                    </p:tab>
+                    
+                    <!-- Tab 7: Envios -->
+                    <p:tab title="Envios">
+                        <p:panel header="Historial de Envios">
+                            <p:dataTable value="#{proyectoController.selected.envioList}" var="envio"
+                                         emptyMessage="No hay envios registrados para este proyecto"
+                                         rendered="#{not empty proyectoController.selected.envioList}">
+                                
+                                <p:column headerText="Fecha" width="120">
+                                    <h:outputText value="#{envio.envioPK.fecha}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                
+                                <p:column headerText="Cantidad" width="130" style="text-align:right">
+                                    <h:outputText value="#{envio.cantidad}" style="font-weight:bold; color:#4CAF50;">
+                                        <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
+                                    </h:outputText>
+                                </p:column>
+                                
+                                <p:column headerText="Acuse MS" width="100" style="text-align:center">
+                                    <h:outputText value="Si" rendered="#{envio.acuseReciboMs eq true}" style="color:#4CAF50;"/>
+                                    <h:outputText value="Pendiente" rendered="#{envio.acuseReciboMs ne true}" style="color:#FF9800;"/>
+                                </p:column>
+                                
+                                <p:column headerText="Acuse Banco" width="100" style="text-align:center">
+                                    <h:outputText value="Si" rendered="#{envio.acuseBanco eq true}" style="color:#4CAF50;"/>
+                                    <h:outputText value="Pendiente" rendered="#{envio.acuseBanco ne true}" style="color:#FF9800;"/>
+                                </p:column>
+                                
+                                <p:column headerText="Comentario">
+                                    <h:outputText value="#{envio.comentario}"/>
+                                </p:column>
+                                
+                            </p:dataTable>
+                            <h:outputText value="No hay envios registrados para este proyecto" 
+                                          rendered="#{empty proyectoController.selected.envioList}" 
+                                          style="color:#999;"/>
+                        </p:panel>
+                    </p:tab>
+                    
+                </p:tabView>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px; margin-top:20px;">
+                    <p:commandButton value="Editar" action="#{proyectoController.prepareEdit}" 
+                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
+                    <p:commandButton value="Eliminar" action="#{proyectoController.destroy}" 
+                                     icon="pi pi-trash" styleClass="ui-button-danger"
+                                     onclick="return confirm('Esta seguro de eliminar este proyecto?');"/>
+                    <p:commandButton value="Volver al Listado" action="#{proyectoController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

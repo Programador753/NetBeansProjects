@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Detalle del Envio"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel header="Informacion del Envio">
+                    <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
+                        
+                        <h:outputText value="Codigo Proyecto:" style="font-weight:bold;"/>
+                        <h:outputText value="#{envioController.selected.envioPK.codigo}" style="font-size:1.2em; color:#1a237e;"/>
+                        
+                        <h:outputText value="Fecha Envio:" style="font-weight:bold;"/>
+                        <h:outputText value="#{envioController.selected.envioPK.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                        
+                        <h:outputText value="Cantidad:" style="font-weight:bold;"/>
+                        <h:outputText value="#{envioController.selected.cantidad}" style="font-size:1.3em; color:#4CAF50; font-weight:bold;">
+                            <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
+                        </h:outputText>
+                        
+                        <h:outputText value="Proyecto:" style="font-weight:bold;"/>
+                        <h:outputText value="#{envioController.selected.proyecto.titulo}" 
+                                      rendered="#{envioController.selected.proyecto ne null}"/>
+                        
+                        <h:outputText value="Acuse Recibo MS:" style="font-weight:bold;"/>
+                        <h:outputText value="Recibido" rendered="#{envioController.selected.acuseReciboMs eq true}" style="color:#4CAF50;"/>
+                        <h:outputText value="Pendiente" rendered="#{envioController.selected.acuseReciboMs ne true}" style="color:#FF9800;"/>
+                        
+                        <h:outputText value="Acuse Banco:" style="font-weight:bold;"/>
+                        <h:outputText value="Confirmado" rendered="#{envioController.selected.acuseBanco eq true}" style="color:#4CAF50;"/>
+                        <h:outputText value="Pendiente" rendered="#{envioController.selected.acuseBanco ne true}" style="color:#FF9800;"/>
+                        
+                        <h:outputText value="Comentario:" style="font-weight:bold;"/>
+                        <h:outputText value="#{envioController.selected.comentario}" style="grid-column: span 3;"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+                
+                <br/>
+                <h:panelGroup style="display:flex; gap:10px;">
+                    <p:commandButton value="Editar" action="#{envioController.prepareEdit}" 
+                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
+                    <p:commandButton value="Eliminar" action="#{envioController.destroy}" 
+                                     icon="pi pi-trash" styleClass="ui-button-danger"
+                                     onclick="return confirm('Esta seguro de eliminar este envio?');"/>
+                    <p:commandButton value="Volver al Listado" action="#{envioController.prepareList}" 
+                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

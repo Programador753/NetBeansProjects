@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title"> Editar Seguimiento</ui:define>
+        <ui:define name="body">
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:form>
+                <p:panel header=" Datos del Seguimiento">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel value="Código:"/>
+                        <p:inputText value="#{seguimientoController.selected.codSeguimiento}" disabled="true"/>
+                        <p:outputLabel value="Proyecto:"/>
+                        <h:selectOneMenu value="#{seguimientoController.selected.codProyecto}">
+                            <f:selectItem itemLabel="-- Seleccione Proyecto --" itemValue=""/>
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <p:outputLabel value="Fecha Seguimiento:"/>
+                        <p:calendar value="#{seguimientoController.selected.fecha}" pattern="dd/MM/yyyy" showOn="button"/>
+                        <p:outputLabel value="Tipo:"/>
+                        <p:selectOneMenu value="#{seguimientoController.selected.tipo}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItem itemLabel="Informe Técnico" itemValue="TEC"/>
+                            <f:selectItem itemLabel="Informe Financiero" itemValue="FIN"/>
+                            <f:selectItem itemLabel="Visita Campo" itemValue="VISITA"/>
+                            <f:selectItem itemLabel="Comunicación" itemValue="COM"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Observaciones: *"/>
+                        <p:inputTextarea value="#{seguimientoController.selected.observaciones}" required="true" rows="5" cols="60" style="width:400px;"/>
+                        <p:outputLabel value="Estado:"/>
+                        <p:selectOneMenu value="#{seguimientoController.selected.estado}">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItem itemLabel="Pendiente" itemValue="PEND"/>
+                            <f:selectItem itemLabel="En Proceso" itemValue="PROC"/>
+                            <f:selectItem itemLabel="Completado" itemValue="COMP"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value=" Guardar" action="#{seguimientoController.update}" icon="pi pi-save"/>
+                <p:commandButton value=" Volver" action="#{seguimientoController.prepareList}" immediate="true"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
