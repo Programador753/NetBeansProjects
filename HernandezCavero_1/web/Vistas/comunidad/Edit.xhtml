@@ -7,22 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Editar Comunidad Autónoma</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditComunidadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Comunidad Autónoma">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código:" for="codComunidad"/>
-                        <p:inputText id="codComunidad" value="#{comunidadController.selected.codComunidad}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *" for="nomComunidad"/>
-                        <p:inputText id="nomComunidad" value="#{comunidadController.selected.nomComunidad}" required="true" size="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{comunidadController.update}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{comunidadController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditComunidadLabel_codComunidad}" for="codComunidad" />
+                    <p:inputText id="codComunidad" value="#{comunidadController.selected.codComunidad}" title="#{bundle.EditComunidadTitle_codComunidad}" required="true" requiredMessage="#{bundle.EditComunidadRequiredMessage_codComunidad}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditComunidadLabel_nomComunidad}" for="nomComunidad" />
+                    <p:inputText id="nomComunidad" value="#{comunidadController.selected.nomComunidad}" title="#{bundle.EditComunidadTitle_nomComunidad}" />
+                </p:panelGrid>
+                <p:commandLink action="#{comunidadController.update}" value="#{bundle.EditComunidadSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditComunidadViewLink}"/>
+                <br />
+                <p:commandLink action="#{comunidadController.prepareList}" value="#{bundle.EditComunidadShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditComunidadIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

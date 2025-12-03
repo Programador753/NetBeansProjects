@@ -192,7 +192,7 @@ public class InstrumentoController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Instrumento.class)
+    @FacesConverter(forClass = Instrumento.class, value = "instrumentoConverter")
     public static class InstrumentoControllerConverter implements Converter {
 
         @Override

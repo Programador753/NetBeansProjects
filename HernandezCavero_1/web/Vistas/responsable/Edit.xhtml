@@ -7,31 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Responsable: #{responsableController.selected.nomResponsable}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditResponsableTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Responsable">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo:"/>
-                        <p:inputText value="#{responsableController.selected.codResponsable}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{responsableController.selected.nomResponsable}" required="true" size="60" style="width:400px;"/>
-                        <p:outputLabel value="Tratamiento:"/>
-                        <p:inputText value="#{responsableController.selected.tratamiento}" size="50"/>
-                        <p:outputLabel value="Tipo Misionero:"/>
-                        <p:selectOneMenu value="#{responsableController.selected.tipoMisionero}">
-                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                            <f:selectItem itemLabel="SDB" itemValue="SDB"/>
-                            <f:selectItem itemLabel="FMA" itemValue="FMA"/>
-                            <f:selectItem itemLabel="HDS" itemValue="HDS"/>
-                        </p:selectOneMenu>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{responsableController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{responsableController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditResponsableLabel_codResponsable}" for="codResponsable" />
+                    <p:inputText id="codResponsable" value="#{responsableController.selected.codResponsable}" title="#{bundle.EditResponsableTitle_codResponsable}" required="true" requiredMessage="#{bundle.EditResponsableRequiredMessage_codResponsable}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditResponsableLabel_nomResponsable}" for="nomResponsable" />
+                    <p:inputText id="nomResponsable" value="#{responsableController.selected.nomResponsable}" title="#{bundle.EditResponsableTitle_nomResponsable}" />
+                    <p:outputLabel value="#{bundle.EditResponsableLabel_tratamiento}" for="tratamiento" />
+                    <p:inputText id="tratamiento" value="#{responsableController.selected.tratamiento}" title="#{bundle.EditResponsableTitle_tratamiento}" />
+                    <p:outputLabel value="#{bundle.EditResponsableLabel_tipoMisionero}" for="tipoMisionero" />
+                    <p:inputText id="tipoMisionero" value="#{responsableController.selected.tipoMisionero}" title="#{bundle.EditResponsableTitle_tipoMisionero}" />
+                </p:panelGrid>
+                <p:commandLink action="#{responsableController.update}" value="#{bundle.EditResponsableSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditResponsableViewLink}"/>
+                <br />
+                <p:commandLink action="#{responsableController.prepareList}" value="#{bundle.EditResponsableShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditResponsableIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

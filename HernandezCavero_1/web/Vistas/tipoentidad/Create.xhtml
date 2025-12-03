@@ -7,22 +7,34 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Nuevo Tipo de Entidad</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTipoentidadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Tipo de Entidad">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo: *"/>
-                        <p:inputText value="#{tipoentidadController.selected.codigo}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{tipoentidadController.selected.nomTipo}" required="true" size="60" style="width:400px;"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateTipoentidadTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateTipoentidadLabel_codTipo}" for="codTipo" />
+                    <p:inputText id="codTipo" value="#{tipoentidadController.selected.codTipo}" title="#{bundle.CreateTipoentidadTitle_codTipo}" required="true" requiredMessage="#{bundle.CreateTipoentidadRequiredMessage_codTipo}"/>
+                    <p:outputLabel value="#{bundle.CreateTipoentidadLabel_nomTipo}" for="nomTipo" />
+                    <p:inputText id="nomTipo" value="#{tipoentidadController.selected.nomTipo}" title="#{bundle.CreateTipoentidadTitle_nomTipo}" />
+                    <p:outputLabel value="#{bundle.CreateTipoentidadLabel_tipoOrganismo}" for="tipoOrganismo" />
+                    <p:inputText id="tipoOrganismo" value="#{tipoentidadController.selected.tipoOrganismo}" title="#{bundle.CreateTipoentidadTitle_tipoOrganismo}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{tipoentidadController.create}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{tipoentidadController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{tipoentidadController.create}" value="#{bundle.CreateTipoentidadSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tipoentidadController.prepareList}" value="#{bundle.CreateTipoentidadShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTipoentidadIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

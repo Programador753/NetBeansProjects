@@ -6,9 +6,11 @@
 package Repositorios;
 
 import Entidades.Status;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,6 +25,13 @@ public class StatusFacade extends AbstractFacade<Status> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public List<Status> statusOrdenados(){
+        em = this.getEntityManager();
+        Query q;
+        q = em.createNamedQuery("Status.findAllOrdenado");
+        return q.getResultList();
     }
 
     public StatusFacade() {

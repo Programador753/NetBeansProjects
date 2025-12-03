@@ -7,22 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Continente: #{continenteController.selected.nomContinente}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditContinenteTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Continente">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo:"/>
-                        <p:inputText value="#{continenteController.selected.codContinente}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{continenteController.selected.nomContinente}" required="true" size="50" style="width:300px;"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{continenteController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{continenteController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditContinenteLabel_codContinente}" for="codContinente" />
+                    <p:inputText id="codContinente" value="#{continenteController.selected.codContinente}" title="#{bundle.EditContinenteTitle_codContinente}" required="true" requiredMessage="#{bundle.EditContinenteRequiredMessage_codContinente}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditContinenteLabel_nomContinente}" for="nomContinente" />
+                    <p:inputText id="nomContinente" value="#{continenteController.selected.nomContinente}" title="#{bundle.EditContinenteTitle_nomContinente}" />
+                </p:panelGrid>
+                <p:commandLink action="#{continenteController.update}" value="#{bundle.EditContinenteSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditContinenteViewLink}"/>
+                <br />
+                <p:commandLink action="#{continenteController.prepareList}" value="#{bundle.EditContinenteShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditContinenteIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

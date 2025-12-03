@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -14,64 +15,38 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListSederesponsableEmpty}" rendered="#{sederesponsableController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{sederesponsableController.items.rowCount > 0}">
-                    <h:outputText value="#{sederesponsableController.pagination.pageFirstItem + 1}..#{sederesponsableController.pagination.pageLastItem + 1}/#{sederesponsableController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{sederesponsableController.previous}" value="#{bundle.Previous} #{sederesponsableController.pagination.pageSize}" rendered="#{sederesponsableController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{sederesponsableController.next}" value="#{bundle.Next} #{sederesponsableController.pagination.pageSize}" rendered="#{sederesponsableController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{sederesponsableController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_sederesponsablePK_fechaInicio}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sederesponsablePK.fechaInicio}">
+                    <p:dataTable value="#{sederesponsableController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_sederesponsablePK_fechaInicio}"><h:outputText value="#{item.sederesponsablePK.fechaInicio}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_fechaFin}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaFin}">
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_fechaFin}"><h:outputText value="#{item.fechaFin}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_email}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.email}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_telefono}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.telefono}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_responsable}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.responsable}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSederesponsableTitle_sede}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sede}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{sederesponsableController.prepareView}" value="#{bundle.ListSederesponsableViewLink}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_email}"><h:outputText value="#{item.email}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_telefono}"><h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_responsable}"><h:outputText value="#{item.responsable}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSederesponsableTitle_sede}"><h:outputText value="#{item.sede}"/>
+                        </p:column>
+                        <p:column><h:commandLink action="#{sederesponsableController.prepareView}" value="#{bundle.ListSederesponsableViewLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{sederesponsableController.prepareEdit}" value="#{bundle.ListSederesponsableEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{sederesponsableController.destroy}" value="#{bundle.ListSederesponsableDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
                 <br />
                 <h:commandLink action="#{sederesponsableController.prepareCreate}" value="#{bundle.ListSederesponsableCreateLink}"/>
                 <br />

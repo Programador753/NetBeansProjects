@@ -7,22 +7,34 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Nueva Población</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreatePoblacionTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="🏘 Población">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código: *" for="codPoblacion"/>
-                        <p:inputText id="codPoblacion" value="#{poblacionController.selected.codPoblacion}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *" for="nomPoblacion"/>
-                        <p:inputText id="nomPoblacion" value="#{poblacionController.selected.nomPoblacion}" required="true" size="50"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreatePoblacionTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreatePoblacionLabel_codPoblacion}" for="codPoblacion" />
+                    <p:inputText id="codPoblacion" value="#{poblacionController.selected.codPoblacion}" title="#{bundle.CreatePoblacionTitle_codPoblacion}" required="true" requiredMessage="#{bundle.CreatePoblacionRequiredMessage_codPoblacion}"/>
+                    <p:outputLabel value="#{bundle.CreatePoblacionLabel_nomPoblacion}" for="nomPoblacion" />
+                    <p:inputText id="nomPoblacion" value="#{poblacionController.selected.nomPoblacion}" title="#{bundle.CreatePoblacionTitle_nomPoblacion}" />
+                    <p:outputLabel value="#{bundle.CreatePoblacionLabel_target}" for="target" />
+                    <p:inputText id="target" value="#{poblacionController.selected.target}" title="#{bundle.CreatePoblacionTitle_target}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{poblacionController.create}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{poblacionController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{poblacionController.create}" value="#{bundle.CreatePoblacionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{poblacionController.prepareList}" value="#{bundle.CreatePoblacionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreatePoblacionIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -8,51 +8,47 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value=" Categorías"/>
+            <h:outputText value="#{bundle.ListCategoriaTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
-                <p:dataTable value="#{categoriaController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} categorías"
-                             emptyMessage="No hay categorías registradas"
-                             style="margin-top:20px;">
-                    
-                    <!-- Código -->
-                    <p:column headerText="Código" sortBy="#{item.codCategoria}" width="100" style="text-align:center">
-                        <h:outputText value="#{item.codCategoria}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{categoriaController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListCategoriaTitle_codCategoria}" sortBy="#{item.codCategoria}" filterBy="#{item.codCategoria}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codCategoria}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Categoría" sortBy="#{item.nomCategoria}">
+
+                    <p:column headerText="#{bundle.ListCategoriaTitle_nomCategoria}" sortBy="#{item.nomCategoria}" filterBy="#{item.nomCategoria}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomCategoria}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{categoriaController.prepareView}" value=" Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{categoriaController.prepareEdit}" value=" Editar" 
-                                       title="Editar categoría" style="margin-right:8px;"/>
-                        <h:commandLink action="#{categoriaController.destroy}" value=" Eliminar" 
-                                       title="Eliminar categoría"
-                                       onclick="return confirm('¿Está seguro de eliminar esta categoría?');"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{categoriaController.prepareView}" value="#{bundle.ListCategoriaViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{categoriaController.prepareEdit}" value="#{bundle.ListCategoriaEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{categoriaController.destroy}" value="#{bundle.ListCategoriaDestroyLink}"/>
                     </p:column>
-                    
                 </p:dataTable>
-                
                 <br />
-                <p:commandButton value=" Nueva Categoría" action="#{categoriaController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value=" Volver al Inicio"/>
+                <h:commandLink action="#{categoriaController.prepareCreate}" value="#{bundle.ListCategoriaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListCategoriaIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

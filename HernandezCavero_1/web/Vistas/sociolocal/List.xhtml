@@ -8,51 +8,49 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="🤝 Socios Locales"/>
+            <h:outputText value="#{bundle.ListSociolocalTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                
-                <p:dataTable value="#{sociolocalController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} socios"
-                             emptyMessage="No hay socios locales registrados"
-                             style="margin-top:20px;">
-                    
-                    <!-- Código -->
-                    <p:column headerText="Código" sortBy="#{item.codSocio}" width="100" style="text-align:center">
-                        <h:outputText value="#{item.codSocio}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{sociolocalController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListSociolocalTitle_codSocio}" sortBy="#{item.codSocio}" filterBy="#{item.codSocio}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codSocio}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Socio Local" sortBy="#{item.nomSocio}">
+
+                    <p:column headerText="#{bundle.ListSociolocalTitle_nomSocio}" sortBy="#{item.nomSocio}" filterBy="#{item.nomSocio}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomSocio}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{sociolocalController.prepareView}" value=" Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{sociolocalController.prepareEdit}" value=" Editar" 
-                                       title="Editar socio" style="margin-right:8px;"/>
-                        <h:commandLink action="#{sociolocalController.destroy}" value=" Eliminar" 
-                                       title="Eliminar socio"
-                                       onclick="return confirm('¿Está seguro de eliminar este socio local?');"/>
+
+                    <p:column headerText="#{bundle.ListSociolocalTitle_orden}" sortBy="#{item.orden}" filterBy="#{item.orden}" filterMatchMode="contains">
+                        <h:outputText value="#{item.orden}"/>
                     </p:column>
-                    
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{sociolocalController.prepareView}" value="#{bundle.ListSociolocalViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{sociolocalController.prepareEdit}" value="#{bundle.ListSociolocalEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{sociolocalController.destroy}" value="#{bundle.ListSociolocalDestroyLink}"/>
+                    </p:column>
                 </p:dataTable>
-                
+
                 <br />
-                <p:commandButton value=" Nuevo Socio" action="#{sociolocalController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value=" Volver al Inicio"/>
+                <h:commandLink action="#{sociolocalController.prepareCreate}" value="#{bundle.ListSociolocalCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListSociolocalIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

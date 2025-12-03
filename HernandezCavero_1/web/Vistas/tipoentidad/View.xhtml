@@ -7,22 +7,37 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle Tipo de Entidad</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewTipoentidadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Tipo de Entidad">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{tipoentidadController.selected.codTipoEntidad}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{tipoentidadController.selected.nomTipoEntidad}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{tipoentidadController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{tipoentidadController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{tipoentidadController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewTipoentidadLabel_codTipo}"/>
+                    <h:outputText value="#{tipoentidadController.selected.codTipo}" title="#{bundle.ViewTipoentidadTitle_codTipo}"/>
+                    <h:outputText value="#{bundle.ViewTipoentidadLabel_nomTipo}"/>
+                    <h:outputText value="#{tipoentidadController.selected.nomTipo}" title="#{bundle.ViewTipoentidadTitle_nomTipo}"/>
+                    <h:outputText value="#{bundle.ViewTipoentidadLabel_tipoOrganismo}"/>
+                    <h:outputText value="#{tipoentidadController.selected.tipoOrganismo}" title="#{bundle.ViewTipoentidadTitle_tipoOrganismo}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{tipoentidadController.destroyAndView}" value="#{bundle.ViewTipoentidadDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewTipoentidadEditLink}"/>
+                <br />
+                <h:commandLink action="#{tipoentidadController.prepareCreate}" value="#{bundle.ViewTipoentidadCreateLink}" />
+                <br />
+                <h:commandLink action="#{tipoentidadController.prepareList}" value="#{bundle.ViewTipoentidadShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewTipoentidadIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -7,28 +7,41 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Detalle Instrumento</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewInstrumentoTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Instrumento de Financiacion">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="LT:" style="font-weight:bold;"/>
-                        <h:outputText value="#{instrumentoController.selected['lt']}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Codigo:" style="font-weight:bold;"/>
-                        <h:outputText value="#{instrumentoController.selected.codigo}"/>
-                        <h:outputText value="Descripcion:" style="font-weight:bold;"/>
-                        <h:outputText value="#{instrumentoController.selected.descripcion}"/>
-                        <h:outputText value="Numero:" style="font-weight:bold;"/>
-                        <h:outputText value="#{instrumentoController.selected.numero}"/>
-                        <h:outputText value="Bloque:" style="font-weight:bold;"/>
-                        <h:outputText value="#{instrumentoController.selected.bloque}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Editar" action="#{instrumentoController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value="Eliminar" action="#{instrumentoController.destroy}" onclick="return confirm('Eliminar?');"/>
-                <p:commandButton value="Volver" action="#{instrumentoController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewInstrumentoLabel_lt}"/>
+                    <h:outputText value="#{instrumentoController.selected['lt']}" title="#{bundle.ViewInstrumentoTitle_lt}"/>
+                    <h:outputText value="#{bundle.ViewInstrumentoLabel_codigo}"/>
+                    <h:outputText value="#{instrumentoController.selected.codigo}" title="#{bundle.ViewInstrumentoTitle_codigo}"/>
+                    <h:outputText value="#{bundle.ViewInstrumentoLabel_descripcion}"/>
+                    <h:outputText value="#{instrumentoController.selected.descripcion}" title="#{bundle.ViewInstrumentoTitle_descripcion}"/>
+                    <h:outputText value="#{bundle.ViewInstrumentoLabel_numero}"/>
+                    <h:outputText value="#{instrumentoController.selected.numero}" title="#{bundle.ViewInstrumentoTitle_numero}"/>
+                    <h:outputText value="#{bundle.ViewInstrumentoLabel_bloque}"/>
+                    <h:outputText value="#{instrumentoController.selected.bloque}" title="#{bundle.ViewInstrumentoTitle_bloque}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{instrumentoController.destroyAndView}" value="#{bundle.ViewInstrumentoDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewInstrumentoEditLink}"/>
+                <br />
+                <h:commandLink action="#{instrumentoController.prepareCreate}" value="#{bundle.ViewInstrumentoCreateLink}" />
+                <br />
+                <h:commandLink action="#{instrumentoController.prepareList}" value="#{bundle.ViewInstrumentoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewInstrumentoIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -8,237 +8,189 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Crear Nuevo Proyecto"/>
+            <h:outputText value="#{bundle.CreateProyectoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            
             <h:form>
-                <p:tabView>
-                    <!-- Tab 1: Datos Basicos -->
-                    <p:tab title="Datos Basicos">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Codigo: *"/>
-                            <p:inputText value="#{proyectoController.selected.codigo}" 
-                                         required="true" size="15" placeholder="Ej: CM/596/20/AG"/>
-                            
-                            <p:outputLabel value="Titulo: *"/>
-                            <p:inputText value="#{proyectoController.selected.titulo}" 
-                                         required="true" size="60" style="width:400px;"/>
-                            
-                            <p:outputLabel value="Descripcion:"/>
-                            <p:inputTextarea value="#{proyectoController.selected.descripcion}" 
-                                             rows="3" cols="60" style="width:400px;"/>
-                            
-                            <p:outputLabel value="ONG:"/>
-                            <p:selectOneMenu value="#{proyectoController.selected.ong}">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItem itemLabel="MS - Misiones Salesianas" itemValue="MS"/>
-                                <f:selectItem itemLabel="JyD - Jovenes y Desarrollo" itemValue="JYD"/>
-                            </p:selectOneMenu>
-                            
-                            <p:outputLabel value="Anyo: *"/>
-                            <p:inputText value="#{proyectoController.selected.anyo}" 
-                                         required="true" size="4" placeholder="2024"/>
-                            
-                            <p:outputLabel value="Pais:"/>
-                            <p:inputText value="#{proyectoController.selected.pais}" 
-                                         size="2" placeholder="ES" maxlength="2"/>
-                            
-                            <p:outputLabel value="Localizacion:"/>
-                            <p:inputText value="#{proyectoController.selected.localizacion}" 
-                                         size="50" style="width:300px;"/>
-                            
-                            <p:outputLabel value="Instrumento:"/>
-                            <p:inputText value="#{proyectoController.selected.instrumento}" 
-                                         size="10" placeholder="AG"/>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 2: Organizacion -->
-                    <p:tab title="Organizacion">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Inspectoria:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.inspectoria}">
-                                <f:selectItem itemLabel="-- Seleccione Inspectoria --" itemValue=""/>
-                                <f:selectItems value="#{inspectoriaController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Sede:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.sede}">
-                                <f:selectItem itemLabel="-- Seleccione Sede --" itemValue=""/>
-                                <f:selectItems value="#{sedeController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Socio Local:"/>
-                            <p:selectOneMenu value="#{proyectoController.selected.socioLocal}">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItem itemLabel="SDB - Salesiano" itemValue="SDB"/>
-                                <f:selectItem itemLabel="FMA - Hija de Maria Auxiliadora" itemValue="FMA"/>
-                                <f:selectItem itemLabel="HDS - Hermana de Don Bosco" itemValue="HDS"/>
-                            </p:selectOneMenu>
-                            
-                            <p:outputLabel value="Tecnico Formulacion:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.tecFor}">
-                                <f:selectItem itemLabel="-- Seleccione Tecnico --" itemValue=""/>
-                                <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Tecnico Seguimiento:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.tecSeg}">
-                                <f:selectItem itemLabel="-- Seleccione Tecnico --" itemValue=""/>
-                                <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 3: Financiacion -->
-                    <p:tab title="Financiacion">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Costo Total (EUR):"/>
-                            <p:inputText value="#{proyectoController.selected.costoTotal}" size="15">
-                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                            </p:inputText>
-                            
-                            <p:outputLabel value="Dinero Solicitado (EUR):"/>
-                            <p:inputText value="#{proyectoController.selected.dineroSolicitado}" size="15">
-                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                            </p:inputText>
-                            
-                            <p:outputLabel value="Dinero Concedido (EUR):"/>
-                            <p:inputText value="#{proyectoController.selected.dineroConcedido}" size="15">
-                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                            </p:inputText>
-                            
-                            <p:outputLabel value="Tipo Entidad:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.tipoEntidad}">
-                                <f:selectItem itemLabel="-- Seleccione Tipo --" itemValue=""/>
-                                <f:selectItems value="#{tipoentidadController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Entidad Financiadora:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.entidad}">
-                                <f:selectItem itemLabel="-- Seleccione Entidad --" itemValue=""/>
-                                <f:selectItems value="#{entidadController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Aprobado?:"/>
-                            <p:selectBooleanCheckbox value="#{proyectoController.selected.aprobado}"/>
-                            
-                            <p:outputLabel value="Fecha Concesion:"/>
-                            <p:calendar value="#{proyectoController.selected.fechaConcesion}" 
-                                        pattern="dd/MM/yyyy" showOn="button"/>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 4: Fechas y Duracion -->
-                    <p:tab title="Fechas">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Fecha Inicio:"/>
-                            <p:calendar value="#{proyectoController.selected.fechaInicio}" 
-                                        pattern="dd/MM/yyyy" showOn="button"/>
-                            
-                            <p:outputLabel value="Fecha Fin:"/>
-                            <p:calendar value="#{proyectoController.selected.fechaFin}" 
-                                        pattern="dd/MM/yyyy" showOn="button"/>
-                            
-                            <p:outputLabel value="Duracion Real (meses):"/>
-                            <p:inputText value="#{proyectoController.selected.duracionReal}" size="4"/>
-                            
-                            <p:outputLabel value="Fecha Cierre:"/>
-                            <p:calendar value="#{proyectoController.selected.fechaCierre}" 
-                                        pattern="dd/MM/yyyy" showOn="button"/>
-                            
-                            <p:outputLabel value="Cerrado?:"/>
-                            <p:selectBooleanCheckbox value="#{proyectoController.selected.cerrado}"/>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 5: Clasificacion -->
-                    <p:tab title="Clasificacion">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Sector MS:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.sectorMS}">
-                                <f:selectItem itemLabel="-- Seleccione Sector --" itemValue=""/>
-                                <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Subsector MS:"/>
-                            <h:selectOneMenu value="#{proyectoController.selected.subsectorMS}">
-                                <f:selectItem itemLabel="-- Seleccione Subsector --" itemValue=""/>
-                                <f:selectItems value="#{subsectorController.itemsAvailableSelectOne}"/>
-                            </h:selectOneMenu>
-                            
-                            <p:outputLabel value="Target:"/>
-                            <p:selectOneMenu value="#{proyectoController.selected.target}">
-                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItem itemLabel="GRAL - General" itemValue="GRAL"/>
-                                <f:selectItem itemLabel="INF - Infancia" itemValue="INF"/>
-                                <f:selectItem itemLabel="JUV - Juventud" itemValue="JUV"/>
-                            </p:selectOneMenu>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 6: Beneficiarios -->
-                    <p:tab title="Beneficiarios">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Num Total Beneficiarios:"/>
-                            <p:inputText value="#{proyectoController.selected.numBeneficiarios}" size="8"/>
-                            
-                            <p:outputLabel value="Beneficiarios Mujeres:"/>
-                            <p:inputText value="#{proyectoController.selected.numBeneficiariosMujeres}" size="8"/>
-                            
-                            <p:outputLabel value="Beneficiarios Hombres:"/>
-                            <p:inputText value="#{proyectoController.selected.numBeneficiariosHombres}" size="8"/>
-                            
-                            <p:outputLabel value="Beneficiarios Indirectos:"/>
-                            <p:inputText value="#{proyectoController.selected.numBeneficiarioInd}" size="8"/>
-                            
-                            <p:outputLabel value="Descripcion Beneficiarios:"/>
-                            <p:inputTextarea value="#{proyectoController.selected.descripcionBeneficiarios}" 
-                                             rows="3" cols="50"/>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                    <!-- Tab 7: Comentarios -->
-                    <p:tab title="Comentarios">
-                        <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                            
-                            <p:outputLabel value="Comentarios:"/>
-                            <p:inputTextarea value="#{proyectoController.selected.comentarios}" 
-                                             rows="5" cols="60" style="width:500px;"/>
-                            
-                            <p:outputLabel value="Justificacion:"/>
-                            <p:inputTextarea value="#{proyectoController.selected.justificacion}" 
-                                             rows="5" cols="60" style="width:500px;"/>
-                            
-                        </h:panelGrid>
-                    </p:tab>
-                    
-                </p:tabView>
-                
-                <br/>
-                <h:panelGroup style="display:flex; gap:10px; margin-top:20px;">
-                    <p:commandButton value="Guardar Proyecto" action="#{proyectoController.create}" 
-                                     icon="pi pi-save" styleClass="ui-button-success"/>
-                    <p:commandButton value="Volver al Listado" action="#{proyectoController.prepareList}" 
-                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
-                </h:panelGroup>
-                
+                <p:panel header="#{bundle.CreateProyectoTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_codProyecto}" for="codProyecto" />
+                    <p:inputText id="codProyecto" value="#{proyectoController.selected.codProyecto}" title="#{bundle.CreateProyectoTitle_codProyecto}" required="true" requiredMessage="#{bundle.CreateProyectoRequiredMessage_codProyecto}"/>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_ong}" for="ong" />
+                    <p:inputText id="ong" value="#{proyectoController.selected.ong}" title="#{bundle.CreateProyectoTitle_ong}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{proyectoController.selected.codigo}" title="#{bundle.CreateProyectoTitle_codigo}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_parte}" for="parte" />
+                    <p:inputText id="parte" value="#{proyectoController.selected.parte}" title="#{bundle.CreateProyectoTitle_parte}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_referencia}" for="referencia" />
+                    <p:inputText id="referencia" value="#{proyectoController.selected.referencia}" title="#{bundle.CreateProyectoTitle_referencia}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numProyecto}" for="numProyecto" />
+                    <p:inputText id="numProyecto" value="#{proyectoController.selected.numProyecto}" title="#{bundle.CreateProyectoTitle_numProyecto}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_instrumento}" for="instrumento" />
+                    <p:inputText id="instrumento" value="#{proyectoController.selected.instrumento}" title="#{bundle.CreateProyectoTitle_instrumento}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_pais}" for="pais" />
+                    <p:inputText id="pais" value="#{proyectoController.selected.pais}" title="#{bundle.CreateProyectoTitle_pais}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_localizacion}" for="localizacion" />
+                    <p:inputText id="localizacion" value="#{proyectoController.selected.localizacion}" title="#{bundle.CreateProyectoTitle_localizacion}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_anyo}" for="anyo" />
+                    <p:inputText id="anyo" value="#{proyectoController.selected.anyo}" title="#{bundle.CreateProyectoTitle_anyo}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_titulo}" for="titulo" />
+                    <p:inputText id="titulo" value="#{proyectoController.selected.titulo}" title="#{bundle.CreateProyectoTitle_titulo}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_descripcion}" for="descripcion" />
+                    <p:inputText id="descripcion" value="#{proyectoController.selected.descripcion}" title="#{bundle.CreateProyectoTitle_descripcion}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_socioLocal}" for="socioLocal" />
+                    <p:inputText id="socioLocal" value="#{proyectoController.selected.socioLocal}" title="#{bundle.CreateProyectoTitle_socioLocal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_regionSdb}" for="regionSdb" />
+                    <p:inputText id="regionSdb" value="#{proyectoController.selected.regionSdb}" title="#{bundle.CreateProyectoTitle_regionSdb}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_responsableLegal}" for="responsableLegal" />
+                    <p:inputText id="responsableLegal" value="#{proyectoController.selected.responsableLegal}" title="#{bundle.CreateProyectoTitle_responsableLegal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_opd}" for="opd" />
+                    <p:inputText id="opd" value="#{proyectoController.selected.opd}" title="#{bundle.CreateProyectoTitle_opd}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_opdContactoNombre}" for="opdContactoNombre" />
+                    <p:inputText id="opdContactoNombre" value="#{proyectoController.selected.opdContactoNombre}" title="#{bundle.CreateProyectoTitle_opdContactoNombre}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_opdContactoMail}" for="opdContactoMail" />
+                    <p:inputText id="opdContactoMail" value="#{proyectoController.selected.opdContactoMail}" title="#{bundle.CreateProyectoTitle_opdContactoMail}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_opdContactoTelefono}" for="opdContactoTelefono" />
+                    <p:inputText id="opdContactoTelefono" value="#{proyectoController.selected.opdContactoTelefono}" title="#{bundle.CreateProyectoTitle_opdContactoTelefono}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_responsableLocal}" for="responsableLocal" />
+                    <p:inputText id="responsableLocal" value="#{proyectoController.selected.responsableLocal}" title="#{bundle.CreateProyectoTitle_responsableLocal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_costoTotal}" for="costoTotal" />
+                    <p:inputText id="costoTotal" value="#{proyectoController.selected.costoTotal}" title="#{bundle.CreateProyectoTitle_costoTotal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_dineroSolicitado}" for="dineroSolicitado" />
+                    <p:inputText id="dineroSolicitado" value="#{proyectoController.selected.dineroSolicitado}" title="#{bundle.CreateProyectoTitle_dineroSolicitado}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_aprobado}" for="aprobado" />
+                    <p:inputText id="aprobado" value="#{proyectoController.selected.aprobado}" title="#{bundle.CreateProyectoTitle_aprobado}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_docConcesion}" for="docConcesion" />
+                    <p:inputText id="docConcesion" value="#{proyectoController.selected.docConcesion}" title="#{bundle.CreateProyectoTitle_docConcesion}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechaConcesion}" for="fechaConcesion" />
+                    <p:inputText id="fechaConcesion" value="#{proyectoController.selected.fechaConcesion}" title="#{bundle.CreateProyectoTitle_fechaConcesion}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_dineroConcedido}" for="dineroConcedido" />
+                    <p:inputText id="dineroConcedido" value="#{proyectoController.selected.dineroConcedido}" title="#{bundle.CreateProyectoTitle_dineroConcedido}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_cd}" for="cd" />
+                    <p:inputText id="cd" value="#{proyectoController.selected.cd}" title="#{bundle.CreateProyectoTitle_cd}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_cdSedeLocal}" for="cdSedeLocal" />
+                    <p:inputText id="cdSedeLocal" value="#{proyectoController.selected.cdSedeLocal}" title="#{bundle.CreateProyectoTitle_cdSedeLocal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_ci}" for="ci" />
+                    <p:inputText id="ci" value="#{proyectoController.selected.ci}" title="#{bundle.CreateProyectoTitle_ci}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_ciMs}" for="ciMs" />
+                    <p:inputText id="ciMs" value="#{proyectoController.selected.ciMs}" title="#{bundle.CreateProyectoTitle_ciMs}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_ciSocioLocal}" for="ciSocioLocal" />
+                    <p:inputText id="ciSocioLocal" value="#{proyectoController.selected.ciSocioLocal}" title="#{bundle.CreateProyectoTitle_ciSocioLocal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_apoCdMs}" for="apoCdMs" />
+                    <p:inputText id="apoCdMs" value="#{proyectoController.selected.apoCdMs}" title="#{bundle.CreateProyectoTitle_apoCdMs}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_duracionReal}" for="duracionReal" />
+                    <p:inputText id="duracionReal" value="#{proyectoController.selected.duracionReal}" title="#{bundle.CreateProyectoTitle_duracionReal}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechaInicio}" for="fechaInicio" />
+                    <p:inputText id="fechaInicio" value="#{proyectoController.selected.fechaInicio}" title="#{bundle.CreateProyectoTitle_fechaInicio}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechaFin}" for="fechaFin" />
+                    <p:inputText id="fechaFin" value="#{proyectoController.selected.fechaFin}" title="#{bundle.CreateProyectoTitle_fechaFin}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechaFinAmpliacion}" for="fechaFinAmpliacion" />
+                    <p:inputText id="fechaFinAmpliacion" value="#{proyectoController.selected.fechaFinAmpliacion}" title="#{bundle.CreateProyectoTitle_fechaFinAmpliacion}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_duracionTrasAmpliacion}" for="duracionTrasAmpliacion" />
+                    <p:inputText id="duracionTrasAmpliacion" value="#{proyectoController.selected.duracionTrasAmpliacion}" title="#{bundle.CreateProyectoTitle_duracionTrasAmpliacion}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_duracionIF}" for="duracionIF" />
+                    <p:inputText id="duracionIF" value="#{proyectoController.selected.duracionIF}" title="#{bundle.CreateProyectoTitle_duracionIF}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechamaximaIF}" for="fechamaximaIF" />
+                    <p:inputText id="fechamaximaIF" value="#{proyectoController.selected.fechamaximaIF}" title="#{bundle.CreateProyectoTitle_fechamaximaIF}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_ingles}" for="ingles" />
+                    <p:inputText id="ingles" value="#{proyectoController.selected.ingles}" title="#{bundle.CreateProyectoTitle_ingles}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_status}" for="status" />
+                    <p:inputText id="status" value="#{proyectoController.selected.status}" title="#{bundle.CreateProyectoTitle_status}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_target}" for="target" />
+                    <p:inputText id="target" value="#{proyectoController.selected.target}" title="#{bundle.CreateProyectoTitle_target}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_tipoProyecto}" for="tipoProyecto" />
+                    <p:inputText id="tipoProyecto" value="#{proyectoController.selected.tipoProyecto}" title="#{bundle.CreateProyectoTitle_tipoProyecto}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_fechaCierre}" for="fechaCierre" />
+                    <p:inputText id="fechaCierre" value="#{proyectoController.selected.fechaCierre}" title="#{bundle.CreateProyectoTitle_fechaCierre}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </p:inputText>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_cerrado}" for="cerrado" />
+                    <p:inputText id="cerrado" value="#{proyectoController.selected.cerrado}" title="#{bundle.CreateProyectoTitle_cerrado}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_sectorJYD}" for="sectorJYD" />
+                    <p:inputText id="sectorJYD" value="#{proyectoController.selected.sectorJYD}" title="#{bundle.CreateProyectoTitle_sectorJYD}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_subsectorJYD}" for="subsectorJYD" />
+                    <p:inputText id="subsectorJYD" value="#{proyectoController.selected.subsectorJYD}" title="#{bundle.CreateProyectoTitle_subsectorJYD}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_sectorCAD}" for="sectorCAD" />
+                    <p:inputText id="sectorCAD" value="#{proyectoController.selected.sectorCAD}" title="#{bundle.CreateProyectoTitle_sectorCAD}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numBeneficiarios}" for="numBeneficiarios" />
+                    <p:inputText id="numBeneficiarios" value="#{proyectoController.selected.numBeneficiarios}" title="#{bundle.CreateProyectoTitle_numBeneficiarios}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numBeneficiariosMujeres}" for="numBeneficiariosMujeres" />
+                    <p:inputText id="numBeneficiariosMujeres" value="#{proyectoController.selected.numBeneficiariosMujeres}" title="#{bundle.CreateProyectoTitle_numBeneficiariosMujeres}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numBeneficiariosHombres}" for="numBeneficiariosHombres" />
+                    <p:inputText id="numBeneficiariosHombres" value="#{proyectoController.selected.numBeneficiariosHombres}" title="#{bundle.CreateProyectoTitle_numBeneficiariosHombres}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_descripcionBeneficiarios}" for="descripcionBeneficiarios" />
+                    <p:inputText id="descripcionBeneficiarios" value="#{proyectoController.selected.descripcionBeneficiarios}" title="#{bundle.CreateProyectoTitle_descripcionBeneficiarios}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numBeneficiarioInd}" for="numBeneficiarioInd" />
+                    <p:inputText id="numBeneficiarioInd" value="#{proyectoController.selected.numBeneficiarioInd}" title="#{bundle.CreateProyectoTitle_numBeneficiarioInd}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_numEntidadesBeneficiarias}" for="numEntidadesBeneficiarias" />
+                    <p:inputText id="numEntidadesBeneficiarias" value="#{proyectoController.selected.numEntidadesBeneficiarias}" title="#{bundle.CreateProyectoTitle_numEntidadesBeneficiarias}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_comentarios}" for="comentarios" />
+                    <p:inputTextarea rows="4" cols="30" id="comentarios" value="#{proyectoController.selected.comentarios}" title="#{bundle.CreateProyectoTitle_comentarios}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_justificacion}" for="justificacion" />
+                    <p:inputTextarea rows="4" cols="30" id="justificacion" value="#{proyectoController.selected.justificacion}" title="#{bundle.CreateProyectoTitle_justificacion}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_informeDonante}" for="informeDonante" />
+                    <p:inputText id="informeDonante" value="#{proyectoController.selected.informeDonante}" title="#{bundle.CreateProyectoTitle_informeDonante}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_categoria}" for="categoria" />
+                    <p:inputText id="categoria" value="#{proyectoController.selected.categoria}" title="#{bundle.CreateProyectoTitle_categoria}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_subcategoria}" for="subcategoria" />
+                    <p:inputText id="subcategoria" value="#{proyectoController.selected.subcategoria}" title="#{bundle.CreateProyectoTitle_subcategoria}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_extinguido}" for="extinguido" />
+                    <p:inputText id="extinguido" value="#{proyectoController.selected.extinguido}" title="#{bundle.CreateProyectoTitle_extinguido}" />
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_tecFor}" for="tecFor" />
+                    <p:selectOneMenu id="tecFor" value="#{proyectoController.selected.tecFor}" title="#{bundle.CreateProyectoTitle_tecFor}" >
+                        <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_tecSeg}" for="tecSeg" />
+                    <p:selectOneMenu id="tecSeg" value="#{proyectoController.selected.tecSeg}" title="#{bundle.CreateProyectoTitle_tecSeg}" >
+                        <f:selectItems value="#{tecnicoController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_tipoEntidad}" for="tipoEntidad" />
+                    <p:selectOneMenu id="tipoEntidad" value="#{proyectoController.selected.tipoEntidad}" title="#{bundle.CreateProyectoTitle_tipoEntidad}" >
+                        <f:selectItems value="#{tipoentidadController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_sede}" for="sede" />
+                    <p:selectOneMenu id="sede" value="#{proyectoController.selected.sede}" title="#{bundle.CreateProyectoTitle_sede}" >
+                        <f:selectItems value="#{sedeController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_inspectoria}" for="inspectoria" />
+                    <p:selectOneMenu id="inspectoria" value="#{proyectoController.selected.inspectoria}" title="#{bundle.CreateProyectoTitle_inspectoria}" >
+                        <f:selectItems value="#{inspectoriaController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_sectorMS}" for="sectorMS" />
+                    <p:selectOneMenu id="sectorMS" value="#{proyectoController.selected.sectorMS}" title="#{bundle.CreateProyectoTitle_sectorMS}" >
+                        <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_subsectorMS}" for="subsectorMS" />
+                    <p:selectOneMenu id="subsectorMS" value="#{proyectoController.selected.subsectorMS}" title="#{bundle.CreateProyectoTitle_subsectorMS}" >
+                        <f:selectItems value="#{subsectorController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.CreateProyectoLabel_entidad}" for="entidad" />
+                    <p:selectOneMenu id="entidad" value="#{proyectoController.selected.entidad}" title="#{bundle.CreateProyectoTitle_entidad}" >
+                        <f:selectItems value="#{entidadController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                </p:panel>
+                <br />
+                <h:commandLink action="#{proyectoController.create}" value="#{bundle.CreateProyectoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{proyectoController.prepareList}" value="#{bundle.CreateProyectoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateProyectoIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

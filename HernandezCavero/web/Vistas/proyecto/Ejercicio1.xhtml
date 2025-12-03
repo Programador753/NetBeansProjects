@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Filtrado por Inspectoría y Status"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="formFiltros">
+                <p:messages id="messagePanel" showDetail="true" closable="true"/>
+                
+                <p:panel header="Filtros de Búsqueda" style="margin-bottom: 20px;">
+                    <h:panelGrid columns="3" cellpadding="5" style="margin-bottom: 10px;">
+                        
+                        <!-- Selector de Socio Local -->
+                        <h:outputLabel value="Socio Local:" for="selectSocioLocal"/>
+                        <h:selectOneMenu id="selectSocioLocal" 
+                                        value="#{proyectoController.socioLocalFiltro}" 
+                                        converter="sociolocalConverter"
+                                        style="width: 300px;">
+                            <f:selectItems value="#{sociolocalController.itemsNombre}"/>
+                            <f:ajax event="change" 
+                                    execute="@this" 
+                                    render="selectInspectoria tablaProyectos messagePanel"
+                                    listener="#{proyectoController.onSocioLocalChange}"/>
+                        </h:selectOneMenu>
+                        
+                        <!-- Selector de Inspectoría (dependiente del Socio Local) -->
+                        <h:outputLabel value="Inspectoría:" for="selectInspectoria"/>
+                        <h:selectOneMenu id="selectInspectoria" 
+                                        value="#{proyectoController.inspectoriaFiltro}" 
+                                        converter="inspectoriaConverter"
+                                        disabled="#{empty proyectoController.socioLocalFiltro}"
+                                        style="width: 300px;">
+                            <f:selectItems value="#{proyectoController.inspectoriasSelectItems}"/>
+                            <f:ajax event="change" execute="@this" render="messagePanel"/>
+                        </h:selectOneMenu>
+                        
+                        <!-- Selector de Status -->
+                        <h:outputLabel value="Status:" for="selectStatus"/>
+                        <h:selectOneMenu id="selectStatus" 
+                                        value="#{proyectoController.statusFiltro}" 
+                                        converter="statusConverter"
+                                        style="width: 300px;">
+                            <f:selectItem itemLabel="--- Seleccione Status ---" itemValue="#{null}"/>
+                            <f:selectItems value="#{statusController.itemsNombre}"/>
+                            <f:ajax event="change" execute="@this" render="messagePanel"/>
+                        </h:selectOneMenu>
+                        
+                        <!-- Botones -->
+                        <h:outputText value=""/>
+                        <h:panelGroup>
+                            <p:commandButton value="Buscar" 
+                                           action="#{proyectoController.buscarProyectosFiltrados}" 
+                                           update="tablaProyectos messagePanel"
+                                           icon="pi pi-search"
+                                           style="margin-right: 10px;"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:panel>
+                
+                <!-- Tabla de resultados -->
+                <h:panelGroup id="tablaProyectos">
+                    <p:dataTable value="#{proyectoController.listaProyectosFiltrados}" 
+                                var="proyecto" 
+                                rendered="#{not empty proyectoController.listaProyectosFiltrados}"
+                                rows="10"
+                                paginator="true" 
+                                paginatorPosition="both"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+                                rowsPerPageTemplate="5,10,25,50"
+                                emptyMessage="No se encontraron proyectos con los filtros seleccionados."
+                                resizableColumns="true">
+                        
+                        <p:column headerText="Código" sortBy="#{proyecto.codigo}" width="100px">
+                            <h:outputText value="#{proyecto.codigo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Título" sortBy="#{proyecto.titulo}" width="250px">
+                            <h:outputText value="#{proyecto.titulo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Inspectoría" sortBy="#{proyecto.inspectoria.nomInspectoria}" width="200px">
+                            <h:outputText value="#{proyecto.inspectoria.codInspectoria} - #{proyecto.inspectoria.nomInspectoria}" 
+                                         rendered="#{proyecto.inspectoria != null}"/>
+                            <h:outputText value="-" rendered="#{proyecto.inspectoria == null}"/>
+                        </p:column>
+                        
+                        <p:column headerText="País" sortBy="#{proyecto.pais}" width="80px">
+                            <h:outputText value="#{proyecto.pais}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Año" sortBy="#{proyecto.anyo}" width="60px" style="text-align:center">
+                            <h:outputText value="#{proyecto.anyo}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Status" sortBy="#{proyecto.status}" width="80px" style="text-align:center">
+                            <h:outputText value="#{proyecto.status}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Dinero Concedido" sortBy="#{proyecto.dineroConcedido}" width="130px" style="text-align:right">
+                            <h:outputText value="#{proyecto.dineroConcedido}">
+                                <f:convertNumber type="currency" currencySymbol="€" minFractionDigits="2"/>
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="Fecha Inicio" sortBy="#{proyecto.fechaInicio}" width="100px">
+                            <h:outputText value="#{proyecto.fechaInicio}" rendered="#{proyecto.fechaInicio != null}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                            <h:outputText value="-" rendered="#{proyecto.fechaInicio == null}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Fecha Fin" sortBy="#{proyecto.fechaFin}" width="100px">
+                            <h:outputText value="#{proyecto.fechaFin}" rendered="#{proyecto.fechaFin != null}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                            <h:outputText value="-" rendered="#{proyecto.fechaFin == null}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <h:outputText value="No hay proyectos que mostrar. Seleccione los filtros y pulse 'Buscar'." 
+                                 rendered="#{empty proyectoController.listaProyectosFiltrados}"
+                                 style="color: #666; font-style: italic;"/>
+                </h:panelGroup>
+                
+                <br/>
+                <h:link outcome="/index" value="Volver al Inicio" style="margin-top: 20px;"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

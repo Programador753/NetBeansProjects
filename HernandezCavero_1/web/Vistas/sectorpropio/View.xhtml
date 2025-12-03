@@ -7,22 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle Sector Propio</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSectorpropioTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Sector Propio">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{sectorpropioController.selected.codSectorPropio}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{sectorpropioController.selected.nomSectorPropio}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{sectorpropioController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{sectorpropioController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{sectorpropioController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSectorpropioLabel_codSector}"/>
+                    <h:outputText value="#{sectorpropioController.selected.codSector}" title="#{bundle.ViewSectorpropioTitle_codSector}"/>
+                    <h:outputText value="#{bundle.ViewSectorpropioLabel_nomSector}"/>
+                    <h:outputText value="#{sectorpropioController.selected.nomSector}" title="#{bundle.ViewSectorpropioTitle_nomSector}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{sectorpropioController.destroyAndView}" value="#{bundle.ViewSectorpropioDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSectorpropioEditLink}"/>
+                <br />
+                <h:commandLink action="#{sectorpropioController.prepareCreate}" value="#{bundle.ViewSectorpropioCreateLink}" />
+                <br />
+                <h:commandLink action="#{sectorpropioController.prepareList}" value="#{bundle.ViewSectorpropioShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSectorpropioIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -7,24 +7,37 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle Subsector</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSubsectorTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Subsector">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{subsectorController.selected.codSubsector}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{subsectorController.selected.nomSubsector}"/>
-                        <h:outputText value="Sector Padre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{subsectorController.selected.sector.nomSector}" rendered="#{subsectorController.selected.sector ne null}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{subsectorController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{subsectorController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{subsectorController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSubsectorLabel_codSubsector}"/>
+                    <h:outputText value="#{subsectorController.selected.codSubsector}" title="#{bundle.ViewSubsectorTitle_codSubsector}"/>
+                    <h:outputText value="#{bundle.ViewSubsectorLabel_nomSubsector}"/>
+                    <h:outputText value="#{subsectorController.selected.nomSubsector}" title="#{bundle.ViewSubsectorTitle_nomSubsector}"/>
+                    <h:outputText value="#{bundle.ViewSubsectorLabel_codSector}"/>
+                    <h:outputText value="#{subsectorController.selected.codSector}" title="#{bundle.ViewSubsectorTitle_codSector}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{subsectorController.destroyAndView}" value="#{bundle.ViewSubsectorDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewSubsectorEditLink}"/>
+                <br />
+                <h:commandLink action="#{subsectorController.prepareCreate}" value="#{bundle.ViewSubsectorCreateLink}" />
+                <br />
+                <h:commandLink action="#{subsectorController.prepareList}" value="#{bundle.ViewSubsectorShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewSubsectorIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

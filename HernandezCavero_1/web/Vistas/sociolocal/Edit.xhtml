@@ -7,22 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Editar Socio Local</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSociolocalTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="🤝 Socio Local">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código:" for="codSocio"/>
-                        <p:inputText id="codSocio" value="#{sociolocalController.selected.codSocio}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *" for="nomSocio"/>
-                        <p:inputText id="nomSocio" value="#{sociolocalController.selected.nomSocio}" required="true" size="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{sociolocalController.update}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{sociolocalController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditSociolocalLabel_codSocio}" for="codSocio" />
+                    <p:inputText id="codSocio" value="#{sociolocalController.selected.codSocio}" title="#{bundle.EditSociolocalTitle_codSocio}" required="true" requiredMessage="#{bundle.EditSociolocalRequiredMessage_codSocio}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditSociolocalLabel_nomSocio}" for="nomSocio" />
+                    <p:inputText id="nomSocio" value="#{sociolocalController.selected.nomSocio}" title="#{bundle.EditSociolocalTitle_nomSocio}" />
+                    <p:outputLabel value="#{bundle.EditSociolocalLabel_orden}" for="orden" />
+                    <p:inputText id="orden" value="#{sociolocalController.selected.orden}" title="#{bundle.EditSociolocalTitle_orden}" />
+                </p:panelGrid>
+                <p:commandLink action="#{sociolocalController.update}" value="#{bundle.EditSociolocalSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditSociolocalViewLink}"/>
+                <br />
+                <p:commandLink action="#{sociolocalController.prepareList}" value="#{bundle.EditSociolocalShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditSociolocalIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -183,6 +183,17 @@ public class StatusController implements Serializable {
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
+    
+    public SelectItem[] getItemsNombre() {
+        java.util.List<Status> listaStatus = ejbFacade.findAll();
+        SelectItem[] items = new SelectItem[listaStatus.size()];
+        int i = 0;
+        for (Status status : listaStatus) {
+            String label = status.getNomStatus() != null ? status.getNomStatus() : "Status " + status.getCodStatus();
+            items[i++] = new SelectItem(status, label);
+        }
+        return items;
+    }
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
@@ -192,7 +203,7 @@ public class StatusController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Status.class)
+    @FacesConverter(forClass = Status.class, value = "statusConverter")
     public static class StatusControllerConverter implements Converter {
 
         @Override
@@ -221,6 +232,9 @@ public class StatusController implements Serializable {
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
+            }
+            if (object instanceof String) {
+                return (String) object;
             }
             if (object instanceof Status) {
                 Status o = (Status) object;

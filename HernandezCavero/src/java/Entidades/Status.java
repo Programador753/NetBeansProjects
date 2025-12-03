@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s")
     , @NamedQuery(name = "Status.findByCodStatus", query = "SELECT s FROM Status s WHERE s.codStatus = :codStatus")
+    , @NamedQuery(name = "Status.findAllOrdenado", query = "SELECT s FROM Status s ORDER BY s.nomStatus")
     , @NamedQuery(name = "Status.findByNomStatus", query = "SELECT s FROM Status s WHERE s.nomStatus = :nomStatus")})
 public class Status implements Serializable {
 

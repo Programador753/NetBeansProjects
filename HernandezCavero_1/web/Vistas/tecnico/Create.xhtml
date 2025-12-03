@@ -7,22 +7,34 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Nuevo Tecnico</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTecnicoTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Tecnico">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo: *"/>
-                        <p:inputText value="#{tecnicoController.selected.codTecnico}" required="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{tecnicoController.selected.nomTecnico}" required="true" size="60" style="width:400px;"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateTecnicoTitle}">
+                    <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="#{bundle.CreateTecnicoLabel_codTecnico}" for="codTecnico" />
+                    <p:inputText id="codTecnico" value="#{tecnicoController.selected.codTecnico}" title="#{bundle.CreateTecnicoTitle_codTecnico}" required="true" requiredMessage="#{bundle.CreateTecnicoRequiredMessage_codTecnico}"/>
+                    <p:outputLabel value="#{bundle.CreateTecnicoLabel_nomTecnico}" for="nomTecnico" />
+                    <p:inputText id="nomTecnico" value="#{tecnicoController.selected.nomTecnico}" title="#{bundle.CreateTecnicoTitle_nomTecnico}" />
+                
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{tecnicoController.create}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{tecnicoController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{tecnicoController.create}" value="#{bundle.CreateTecnicoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{tecnicoController.prepareList}" value="#{bundle.CreateTecnicoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTecnicoIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -8,79 +8,75 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Listado de Inspectorias"/>
+            <h:outputText value="#{bundle.ListInspectoriaTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
-                <p:dataTable value="#{inspectoriaController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} inspectorias"
-                             rowsPerPageTemplate="5,10,25,50"
-                             emptyMessage="No hay inspectorias registradas"
-                             tableStyle="table-layout:auto"
-                             style="margin-top:20px;">
-                    
-                    <!-- Codigo -->
-                    <p:column headerText="Cod." sortBy="#{item.codInspectoria}" style="text-align:center; width:60px;">
-                        <h:outputText value="#{item.codInspectoria}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{inspectoriaController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_codigo}" sortBy="#{item.codigo}" filterBy="#{item.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codigo}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Nombre Inspectoria" sortBy="#{item.nomInspectoria}">
-                        <h:outputText value="#{item.nomInspectoria}"/>
-                    </p:column>
-                    
-                    <!-- Socio Local -->
-                    <p:column headerText="Socio" sortBy="#{item.socioLocal}" style="text-align:center; width:50px;">
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_socioLocal}" sortBy="#{item.socioLocal}" filterBy="#{item.socioLocal}" filterMatchMode="contains">
                         <h:outputText value="#{item.socioLocal}"/>
                     </p:column>
-                    
-                    <!-- Email OPD -->
-                    <p:column headerText="Email Contacto" sortBy="#{item.opdContactoMail}" style="width:180px;">
-                        <h:outputLink value="mailto:#{item.opdContactoMail}" rendered="#{item.opdContactoMail ne null}">
-                            <h:outputText value="#{item.opdContactoMail}"/>
-                        </h:outputLink>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_codInspectoria}" sortBy="#{item.codInspectoria}" filterBy="#{item.codInspectoria}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codInspectoria}"/>
                     </p:column>
-                    
-                    <!-- Numero de Sedes -->
-                    <p:column headerText="Sedes" style="text-align:center; width:50px;">
-                        <h:outputText value="#{item.sedeList.size()}" rendered="#{item.sedeList ne null}" 
-                                      style="font-weight:bold; color:#4CAF50;"/>
-                        <h:outputText value="0" rendered="#{item.sedeList eq null}" style="color:#999;"/>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_nomInspectoria}" sortBy="#{item.nomInspectoria}" filterBy="#{item.nomInspectoria}" filterMatchMode="contains">
+                        <h:outputText value="#{item.nomInspectoria}"/>
                     </p:column>
-                    
-                    <!-- Numero de Proyectos -->
-                    <p:column headerText="Proy." style="text-align:center; width:50px;">
-                        <h:outputText value="#{item.proyectoList.size()}" rendered="#{item.proyectoList ne null}" 
-                                      style="font-weight:bold; color:#2196F3;"/>
-                        <h:outputText value="0" rendered="#{item.proyectoList eq null}" style="color:#999;"/>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_responsableLegal}">
+                        <h:outputText value="#{item.responsableLegal}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
-                        <h:commandLink action="#{inspectoriaController.prepareView}" value="Ver" 
-                                       title="Ver detalles" style="margin-right:5px;"/>
-                        <h:commandLink action="#{inspectoriaController.prepareEdit}" value="Editar" 
-                                       title="Editar inspectoria" style="margin-right:5px;"/>
-                        <h:commandLink action="#{inspectoriaController.destroy}" value="X" 
-                                       title="Eliminar inspectoria" style="color:red;"
-                                       onclick="return confirm('Esta seguro de eliminar esta inspectoria?');"/>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_opd}">
+                        <h:outputText value="#{item.opd}"/>
                     </p:column>
-                    
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_opdContactoNombre}">
+                        <h:outputText value="#{item.opdContactoNombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_opdContactoMail}">
+                        <h:outputText value="#{item.opdContactoMail}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListInspectoriaTitle_opdContactoTelefono}">
+                        <h:outputText value="#{item.opdContactoTelefono}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{inspectoriaController.prepareView}" value="#{bundle.ListInspectoriaViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{inspectoriaController.prepareEdit}" value="#{bundle.ListInspectoriaEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{inspectoriaController.destroy}" value="#{bundle.ListInspectoriaDestroyLink}"/>
+                    </p:column>
                 </p:dataTable>
-                
                 <br />
-                <p:commandButton value="Nueva Inspectoria" action="#{inspectoriaController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value="Volver al Inicio"/>
+                <h:commandLink action="#{inspectoriaController.prepareCreate}" value="#{bundle.ListInspectoriaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListInspectoriaIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

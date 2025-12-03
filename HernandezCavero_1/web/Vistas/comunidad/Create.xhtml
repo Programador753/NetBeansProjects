@@ -7,22 +7,32 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Nueva Comunidad Autónoma</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateComunidadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Comunidad Autónoma">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código: *" for="codComunidad"/>
-                        <p:inputText id="codComunidad" value="#{comunidadController.selected.codComunidad}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *" for="nomComunidad"/>
-                        <p:inputText id="nomComunidad" value="#{comunidadController.selected.nomComunidad}" required="true" size="50"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateComunidadTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateComunidadLabel_codComunidad}" for="codComunidad" />
+                    <p:inputText id="codComunidad" value="#{comunidadController.selected.codComunidad}" title="#{bundle.CreateComunidadTitle_codComunidad}" required="true" requiredMessage="#{bundle.CreateComunidadRequiredMessage_codComunidad}"/>
+                    <p:outputLabel value="#{bundle.CreateComunidadLabel_nomComunidad}" for="nomComunidad" />
+                    <p:inputText id="nomComunidad" value="#{comunidadController.selected.nomComunidad}" title="#{bundle.CreateComunidadTitle_nomComunidad}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{comunidadController.create}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{comunidadController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{comunidadController.create}" value="#{bundle.CreateComunidadSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{comunidadController.prepareList}" value="#{bundle.CreateComunidadShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateComunidadIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

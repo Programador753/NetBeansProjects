@@ -6,6 +6,7 @@ import Controladores.util.PaginationHelper;
 import Repositorios.TecnicoFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -185,14 +186,24 @@ public class TecnicoController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        List<Tecnico> tecnicos = ejbFacade.findAll();
+        SelectItem[] items = new SelectItem[tecnicos.size() + 1];
+        items[0] = new SelectItem("", "---");
+        int i = 1;
+        for (Tecnico tecnico : tecnicos) {
+            String codigoStr = tecnico.getCodTecnico() != null ? tecnico.getCodTecnico().toString() : "";
+            String nombre = tecnico.getNomTecnico() != null ? tecnico.getNomTecnico() : "";
+            String label = codigoStr + " - " + nombre;
+            items[i++] = new SelectItem(tecnico, label);
+        }
+        return items;
     }
 
     public Tecnico getTecnico(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Tecnico.class)
+    @FacesConverter(forClass = Tecnico.class, value = "tecnicoConverter")
     public static class TecnicoControllerConverter implements Converter {
 
         @Override
@@ -221,6 +232,9 @@ public class TecnicoController implements Serializable {
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
+            }
+            if (object instanceof String) {
+                return (String) object;
             }
             if (object instanceof Tecnico) {
                 Tecnico o = (Tecnico) object;

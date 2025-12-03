@@ -7,22 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Editar Sector DBN CAD Inglés</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSectoresdbncadinglesTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Sector DBN CAD Inglés">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código:" for="codSectorDbncadIngles"/>
-                        <p:inputText id="codSectorDbncadIngles" value="#{sectoresdbncadinglesController.selected.codSectorDbncadIngles}" disabled="true"/>
-                        <p:outputLabel value="Nombre (Inglés): *" for="nomSectorDbncadIngles"/>
-                        <p:inputText id="nomSectorDbncadIngles" value="#{sectoresdbncadinglesController.selected.nomSectorDbncadIngles}" required="true" size="80" style="width:500px;"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{sectoresdbncadinglesController.update}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{sectoresdbncadinglesController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditSectoresdbncadinglesLabel_codsectorIng}" for="codsectorIng" />
+                    <p:inputText id="codsectorIng" value="#{sectoresdbncadinglesController.selected.codsectorIng}" title="#{bundle.EditSectoresdbncadinglesTitle_codsectorIng}" required="true" requiredMessage="#{bundle.EditSectoresdbncadinglesRequiredMessage_codsectorIng}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditSectoresdbncadinglesLabel_nomsectorIng}" for="nomsectorIng" />
+                    <p:inputText id="nomsectorIng" value="#{sectoresdbncadinglesController.selected.nomsectorIng}" title="#{bundle.EditSectoresdbncadinglesTitle_nomsectorIng}" />
+                    <p:outputLabel value="#{bundle.EditSectoresdbncadinglesLabel_codSector}" for="codSector" />
+                    <p:inputText id="codSector" value="#{sectoresdbncadinglesController.selected.codSector}" title="#{bundle.EditSectoresdbncadinglesTitle_codSector}" />
+                </p:panelGrid>
+                <p:commandLink action="#{sectoresdbncadinglesController.update}" value="#{bundle.EditSectoresdbncadinglesSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditSectoresdbncadinglesViewLink}"/>
+                <br />
+                <p:commandLink action="#{sectoresdbncadinglesController.prepareList}" value="#{bundle.EditSectoresdbncadinglesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditSectoresdbncadinglesIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -192,7 +192,7 @@ public class PaisController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Pais.class)
+    @FacesConverter(forClass = Pais.class, value = "paisConverter")
     public static class PaisControllerConverter implements Converter {
 
         @Override

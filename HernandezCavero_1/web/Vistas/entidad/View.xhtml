@@ -8,60 +8,36 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value=" Detalle Entidad: #{entidadController.selected.nomEntidad}"/>
+            <h:outputText value="#{bundle.ViewEntidadTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Información de la Entidad">
-                    <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
-                        
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{entidadController.selected.codigo}" style="font-size:1.2em; color:#1a237e;"/>
-                        
-                        <h:outputText value="Tipo:" style="font-weight:bold;"/>
-                        <h:outputText value="#{entidadController.selected.tipoEntidad}"/>
-                        
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{entidadController.selected.nomEntidad}" style="grid-column: span 3; font-size:1.1em;"/>
-                        
-                    </h:panelGrid>
-                </p:panel>
-                
-                <p:panel header=" Proyectos Financiados" style="margin-top:15px;">
-                    <p:dataTable value="#{entidadController.selected.proyectoList}" var="proyecto"
-                                 emptyMessage="No hay proyectos financiados por esta entidad"
-                                 rendered="#{not empty entidadController.selected.proyectoList}"
-                                 rows="5" paginator="true">
-                        <p:column headerText="Código" width="120">
-                            <h:outputText value="#{proyecto.codigo}"/>
-                        </p:column>
-                        <p:column headerText="Título">
-                            <h:outputText value="#{proyecto.titulo}"/>
-                        </p:column>
-                        <p:column headerText="Año" width="60">
-                            <h:outputText value="#{proyecto.anyo}"/>
-                        </p:column>
-                        <p:column headerText="Dinero Concedido" width="130" style="text-align:right">
-                            <h:outputText value="#{proyecto.dineroConcedido}">
-                                <f:convertNumber type="currency" currencySymbol="€"/>
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>
-                    <h:outputText value="No hay proyectos financiados" 
-                                  rendered="#{empty entidadController.selected.proyectoList}" style="color:#999;"/>
-                </p:panel>
-                
-                <br/>
-                <h:panelGroup style="display:flex; gap:10px;">
-                    <p:commandButton value=" Editar" action="#{entidadController.prepareEdit}" 
-                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
-                    <p:commandButton value=" Eliminar" action="#{entidadController.destroy}" 
-                                     icon="pi pi-trash" styleClass="ui-button-danger"
-                                     onclick="return confirm('¿Está seguro de eliminar esta entidad?');"/>
-                    <p:commandButton value=" Volver al Listado" action="#{entidadController.prepareList}" 
-                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
-                </h:panelGroup>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEntidadLabel_codigo}"/>
+                    <h:outputText value="#{entidadController.selected.codigo}" title="#{bundle.ViewEntidadTitle_codigo}"/>
+                    <h:outputText value="#{bundle.ViewEntidadLabel_tipoEntidad}"/>
+                    <h:outputText value="#{entidadController.selected.tipoEntidad}" title="#{bundle.ViewEntidadTitle_tipoEntidad}"/>
+                    <h:outputText value="#{bundle.ViewEntidadLabel_nomEntidad}"/>
+                    <h:outputText value="#{entidadController.selected.nomEntidad}" title="#{bundle.ViewEntidadTitle_nomEntidad}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{entidadController.destroyAndView}" value="#{bundle.ViewEntidadDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewEntidadEditLink}"/>
+                <br />
+                <h:commandLink action="#{entidadController.prepareCreate}" value="#{bundle.ViewEntidadCreateLink}" />
+                <br />
+                <h:commandLink action="#{entidadController.prepareList}" value="#{bundle.ViewEntidadShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewEntidadIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

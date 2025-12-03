@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -14,42 +15,28 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListSubsectorpropioEmpty}" rendered="#{subsectorpropioController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{subsectorpropioController.items.rowCount > 0}">
-                    <h:outputText value="#{subsectorpropioController.pagination.pageFirstItem + 1}..#{subsectorpropioController.pagination.pageLastItem + 1}/#{subsectorpropioController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{subsectorpropioController.previous}" value="#{bundle.Previous} #{subsectorpropioController.pagination.pageSize}" rendered="#{subsectorpropioController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{subsectorpropioController.next}" value="#{bundle.Next} #{subsectorpropioController.pagination.pageSize}" rendered="#{subsectorpropioController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{subsectorpropioController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSubsectorpropioTitle_codSubsector}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codSubsector}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSubsectorpropioTitle_nomSubsector}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomSubsector}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSubsectorpropioTitle_codSector}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codSector}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{subsectorpropioController.prepareView}" value="#{bundle.ListSubsectorpropioViewLink}"/>
+                    <p:dataTable value="#{subsectorpropioController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+                        <p:column headerText="#{bundle.ListSubsectorpropioTitle_codSubsector}"><h:outputText value="#{item.codSubsector}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSubsectorpropioTitle_nomSubsector}"><h:outputText value="#{item.nomSubsector}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListSubsectorpropioTitle_codSector}"><h:outputText value="#{item.codSector}"/>
+                        </p:column>
+                        <p:column><h:commandLink action="#{subsectorpropioController.prepareView}" value="#{bundle.ListSubsectorpropioViewLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{subsectorpropioController.prepareEdit}" value="#{bundle.ListSubsectorpropioEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{subsectorpropioController.destroy}" value="#{bundle.ListSubsectorpropioDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
                 <br />
                 <h:commandLink action="#{subsectorpropioController.prepareCreate}" value="#{bundle.ListSubsectorpropioCreateLink}"/>
                 <br />

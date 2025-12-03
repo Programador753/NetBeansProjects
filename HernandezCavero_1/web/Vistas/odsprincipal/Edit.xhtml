@@ -7,24 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar ODS: #{odsprincipalController.selected.nomOds}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditOdsprincipalTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del ODS Principal">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo ODS:"/>
-                        <p:inputText value="#{odsprincipalController.selected.codOds}" disabled="true"/>
-                        <p:outputLabel value="Nombre (Espanol): *"/>
-                        <p:inputText value="#{odsprincipalController.selected.nomOds}" required="true" size="60" style="width:400px;"/>
-                        <p:outputLabel value="Descripcion:"/>
-                        <p:inputTextarea value="#{odsprincipalController.selected.descripcion}" rows="3" cols="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{odsprincipalController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{odsprincipalController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditOdsprincipalLabel_codOds}" for="codOds" />
+                    <p:inputText id="codOds" value="#{odsprincipalController.selected.codOds}" title="#{bundle.EditOdsprincipalTitle_codOds}" required="true" requiredMessage="#{bundle.EditOdsprincipalRequiredMessage_codOds}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditOdsprincipalLabel_nomOds}" for="nomOds" />
+                    <p:inputText id="nomOds" value="#{odsprincipalController.selected.nomOds}" title="#{bundle.EditOdsprincipalTitle_nomOds}" />
+                </p:panelGrid>
+                <p:commandLink action="#{odsprincipalController.update}" value="#{bundle.EditOdsprincipalSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditOdsprincipalViewLink}"/>
+                <br />
+                <p:commandLink action="#{odsprincipalController.prepareList}" value="#{bundle.EditOdsprincipalShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditOdsprincipalIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

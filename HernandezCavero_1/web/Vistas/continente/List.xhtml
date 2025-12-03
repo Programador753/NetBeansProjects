@@ -8,51 +8,47 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Listado de Continentes"/>
+            <h:outputText value="#{bundle.ListContinenteTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
-                <p:dataTable value="#{continenteController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} continentes"
-                             emptyMessage="No hay continentes registrados"
-                             style="margin-top:20px;">
-                    
-                    <!-- Codigo -->
-                    <p:column headerText="Codigo" sortBy="#{item.codContinente}" width="100" style="text-align:center">
-                        <h:outputText value="#{item.codContinente}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{continenteController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListContinenteTitle_codContinente}" sortBy="#{item.codContinente}" filterBy="#{item.codContinente}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codContinente}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Nombre del Continente" sortBy="#{item.nomContinente}">
+
+                    <p:column headerText="#{bundle.ListContinenteTitle_nomContinente}" sortBy="#{item.nomContinente}" filterBy="#{item.nomContinente}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomContinente}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{continenteController.prepareView}" value="Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{continenteController.prepareEdit}" value="Editar" 
-                                       title="Editar continente" style="margin-right:8px;"/>
-                        <h:commandLink action="#{continenteController.destroy}" value="Eliminar" 
-                                       title="Eliminar continente"
-                                       onclick="return confirm('Esta seguro de eliminar este continente?');"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{continenteController.prepareView}" value="#{bundle.ListContinenteViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{continenteController.prepareEdit}" value="#{bundle.ListContinenteEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{continenteController.destroy}" value="#{bundle.ListContinenteDestroyLink}"/>
                     </p:column>
-                    
                 </p:dataTable>
-                
                 <br />
-                <p:commandButton value="Nuevo Continente" action="#{continenteController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value="Volver al Inicio"/>
+                <h:commandLink action="#{continenteController.prepareCreate}" value="#{bundle.ListContinenteCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListContinenteIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

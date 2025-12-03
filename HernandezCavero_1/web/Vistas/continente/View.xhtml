@@ -7,24 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle Continente</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewContinenteTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Continente">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{continenteController.selected.codContinente}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre (Español):" style="font-weight:bold;"/>
-                        <h:outputText value="#{continenteController.selected.nomContinente}"/>
-                        <h:outputText value="Nombre (Inglés):" style="font-weight:bold;"/>
-                        <h:outputText value="#{continenteController.selected.nomContinenteIngles}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{continenteController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{continenteController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{continenteController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewContinenteLabel_codContinente}"/>
+                    <h:outputText value="#{continenteController.selected.codContinente}" title="#{bundle.ViewContinenteTitle_codContinente}"/>
+                    <h:outputText value="#{bundle.ViewContinenteLabel_nomContinente}"/>
+                    <h:outputText value="#{continenteController.selected.nomContinente}" title="#{bundle.ViewContinenteTitle_nomContinente}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{continenteController.destroyAndView}" value="#{bundle.ViewContinenteDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewContinenteEditLink}"/>
+                <br />
+                <h:commandLink action="#{continenteController.prepareCreate}" value="#{bundle.ViewContinenteCreateLink}" />
+                <br />
+                <h:commandLink action="#{continenteController.prepareList}" value="#{bundle.ViewContinenteShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewContinenteIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

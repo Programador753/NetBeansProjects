@@ -192,7 +192,7 @@ public class OdsprincipalController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Odsprincipal.class)
+    @FacesConverter(forClass = Odsprincipal.class, value = "odsprincipalConverter")
     public static class OdsprincipalControllerConverter implements Converter {
 
         @Override

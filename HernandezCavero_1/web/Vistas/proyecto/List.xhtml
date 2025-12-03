@@ -8,89 +8,77 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Listado de Proyectos"/>
+            <h:outputText value="#{bundle.ListProyectoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                
-                <p:dataTable value="#{proyectoController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} proyectos"
-                             rowsPerPageTemplate="5,10,25,50"
-                             emptyMessage="No hay proyectos registrados"
-                             tableStyle="table-layout:auto"
-                             style="margin-top:20px;">
-                    
-                    <!-- Codigo del Proyecto -->
-                    <p:column headerText="Codigo" sortBy="#{item.codigo}" style="text-align:center; width:90px;">
-                        <h:outputText value="#{item.codigo}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{proyectoController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_codProyecto}" sortBy="#{item.codProyecto}" filterBy="#{item.codProyecto}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codProyecto}"/>
                     </p:column>
-                    
-                    <!-- Titulo -->
-                    <p:column headerText="Titulo" sortBy="#{item.titulo}">
-                        <h:outputText value="#{item.titulo}"/>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_ong}" sortBy="#{item.ong}" filterBy="#{item.ong}" filterMatchMode="contains">
+                        <h:outputText value="#{item.ong}"/>
                     </p:column>
-                    
-                    <!-- Pais -->
-                    <p:column headerText="Pais" sortBy="#{item.pais}" style="text-align:center; width:60px;">
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_codigo}" sortBy="#{item.codigo}" filterBy="#{item.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_parte}" sortBy="#{item.parte}" filterBy="#{item.parte}" filterMatchMode="contains">
+                        <h:outputText value="#{item.parte}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_referencia}" sortBy="#{item.referencia}" filterBy="#{item.referencia}" filterMatchMode="contains">
+                        <h:outputText value="#{item.referencia}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_numProyecto}" sortBy="#{item.numProyecto}" filterBy="#{item.numProyecto}" filterMatchMode="contains">
+                        <h:outputText value="#{item.numProyecto}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_instrumento}" sortBy="#{item.instrumento}" filterBy="#{item.instrumento}" filterMatchMode="contains">
+                        <h:outputText value="#{item.instrumento}"/>
+                    </p:column>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_pais}" sortBy="#{item.pais}" filterBy="#{item.pais}" filterMatchMode="contains">
                         <h:outputText value="#{item.pais}"/>
                     </p:column>
-                    
-                    <!-- Anyo -->
-                    <p:column headerText="Anyo" sortBy="#{item.anyo}" style="text-align:center; width:50px;">
-                        <h:outputText value="#{item.anyo}" style="font-weight:bold;"/>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_localizacion}" sortBy="#{item.localizacion}" filterBy="#{item.localizacion}" filterMatchMode="contains">
+                        <h:outputText value="#{item.localizacion}"/>
                     </p:column>
-                    
-                    <!-- Inspectoria -->
-                    <p:column headerText="Insp." sortBy="#{item.inspectoria.codInspectoria}" style="text-align:center; width:50px;">
-                        <h:outputText value="#{item.inspectoria.codInspectoria}" rendered="#{item.inspectoria ne null}"/>
+
+                    <p:column headerText="#{bundle.ListProyectoTitle_anyo}" sortBy="#{item.anyo}" filterBy="#{item.anyo}" filterMatchMode="contains">
+                        <h:outputText value="#{item.anyo}"/>
                     </p:column>
-                    
-                    <!-- Dinero Concedido -->
-                    <p:column headerText="Concedido" sortBy="#{item.dineroConcedido}" style="text-align:right; width:100px;">
-                        <h:outputText value="#{item.dineroConcedido}" styleClass="currency">
-                            <f:convertNumber type="number" groupingUsed="true" minFractionDigits="0" maxFractionDigits="0"/>
-                        </h:outputText>
-                        <h:outputText value=" EUR" style="font-size:0.8em;"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{proyectoController.prepareView}" value="#{bundle.ListProyectoViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{proyectoController.prepareEdit}" value="#{bundle.ListProyectoEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{proyectoController.destroy}" value="#{bundle.ListProyectoDestroyLink}"/>
                     </p:column>
-                    
-                    <!-- Fecha Inicio -->
-                    <p:column headerText="Inicio" sortBy="#{item.fechaInicio}" style="text-align:center; width:80px;">
-                        <h:outputText value="#{item.fechaInicio}">
-                            <f:convertDateTime pattern="dd/MM/yy"/>
-                        </h:outputText>
-                    </p:column>
-                    
-                    <!-- Aprobado -->
-                    <p:column headerText="Apr." style="text-align:center; width:40px;">
-                        <h:outputText value="Si" rendered="#{item.aprobado eq true}" style="color:#4CAF50; font-weight:bold;"/>
-                        <h:outputText value="No" rendered="#{item.aprobado eq false or item.aprobado eq null}" style="color:#f44336;"/>
-                    </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
-                        <h:commandLink action="#{proyectoController.prepareView}" value="Ver" 
-                                       title="Ver detalles" style="margin-right:5px;"/>
-                        <h:commandLink action="#{proyectoController.prepareEdit}" value="Editar" 
-                                       title="Editar proyecto" style="margin-right:5px;"/>
-                        <h:commandLink action="#{proyectoController.destroy}" value="X" 
-                                       title="Eliminar proyecto" style="color:red;"
-                                       onclick="return confirm('Esta seguro de eliminar este proyecto?');"/>
-                    </p:column>
-                    
                 </p:dataTable>
-                
+
                 <br />
-                <p:commandButton value="Nuevo Proyecto" action="#{proyectoController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value="Volver al Inicio"/>
+                <h:commandLink action="#{proyectoController.prepareCreate}" value="#{bundle.ListProyectoCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListProyectoIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

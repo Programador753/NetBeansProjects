@@ -7,30 +7,41 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Pais: #{paisController.selected.nomPais}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPaisTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Pais">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo ISO:"/>
-                        <p:inputText value="#{paisController.selected.codPais}" disabled="true"/>
-                        <p:outputLabel value="Nombre (Espanol): *"/>
-                        <p:inputText value="#{paisController.selected.nomPais}" required="true" size="50" style="width:300px;"/>
-                        <p:outputLabel value="Nombre (Ingles):"/>
-                        <p:inputText value="#{paisController.selected.nomPaisIngles}" size="50" style="width:300px;"/>
-                        <p:outputLabel value="Codigo Telefono:"/>
-                        <p:inputText value="#{paisController.selected.codPaisTelefono}" size="5"/>
-                        <p:outputLabel value="Subcontinente:"/>
-                        <p:inputText value="#{paisController.selected.subContinente}" size="5"/>
-                        <p:outputLabel value="Region:"/>
-                        <p:inputText value="#{paisController.selected.codRegion}" size="5"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{paisController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{paisController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditPaisLabel_codigo}" for="codigo" />
+                    <p:inputText id="codigo" value="#{paisController.selected.codigo}" title="#{bundle.EditPaisTitle_codigo}" required="true" requiredMessage="#{bundle.EditPaisRequiredMessage_codigo}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditPaisLabel_codPais}" for="codPais" />
+                    <p:inputText id="codPais" value="#{paisController.selected.codPais}" title="#{bundle.EditPaisTitle_codPais}" />
+                    <p:outputLabel value="#{bundle.EditPaisLabel_codPaisTelefono}" for="codPaisTelefono" />
+                    <p:inputText id="codPaisTelefono" value="#{paisController.selected.codPaisTelefono}" title="#{bundle.EditPaisTitle_codPaisTelefono}" />
+                    <p:outputLabel value="#{bundle.EditPaisLabel_nomPais}" for="nomPais" />
+                    <p:inputText id="nomPais" value="#{paisController.selected.nomPais}" title="#{bundle.EditPaisTitle_nomPais}" required="true" requiredMessage="#{bundle.EditPaisRequiredMessage_nomPais}"/>
+                    <p:outputLabel value="#{bundle.EditPaisLabel_nomPaisIngles}" for="nomPaisIngles" />
+                    <p:inputText id="nomPaisIngles" value="#{paisController.selected.nomPaisIngles}" title="#{bundle.EditPaisTitle_nomPaisIngles}" />
+                    <p:outputLabel value="#{bundle.EditPaisLabel_subContinente}" for="subContinente" />
+                    <p:inputText id="subContinente" value="#{paisController.selected.subContinente}" title="#{bundle.EditPaisTitle_subContinente}" />
+                    <p:outputLabel value="#{bundle.EditPaisLabel_codRegion}" for="codRegion" />
+                    <p:inputText id="codRegion" value="#{paisController.selected.codRegion}" title="#{bundle.EditPaisTitle_codRegion}" />
+                </p:panelGrid>
+                <p:commandLink action="#{paisController.update}" value="#{bundle.EditPaisSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditPaisViewLink}"/>
+                <br />
+                <p:commandLink action="#{paisController.prepareList}" value="#{bundle.EditPaisShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditPaisIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

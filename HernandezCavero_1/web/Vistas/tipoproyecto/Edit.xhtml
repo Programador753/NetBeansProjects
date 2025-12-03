@@ -7,22 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Editar Tipo de Proyecto</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTipoproyectoTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Tipo de Proyecto">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código:" for="codTipoProyecto"/>
-                        <p:inputText id="codTipoProyecto" value="#{tipoproyectoController.selected.codTipoProyecto}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *" for="nomTipoProyecto"/>
-                        <p:inputText id="nomTipoProyecto" value="#{tipoproyectoController.selected.nomTipoProyecto}" required="true" size="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{tipoproyectoController.update}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{tipoproyectoController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditTipoproyectoLabel_codTipo}" for="codTipo" />
+                    <p:inputText id="codTipo" value="#{tipoproyectoController.selected.codTipo}" title="#{bundle.EditTipoproyectoTitle_codTipo}" required="true" requiredMessage="#{bundle.EditTipoproyectoRequiredMessage_codTipo}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditTipoproyectoLabel_nomTipo}" for="nomTipo" />
+                    <p:inputText id="nomTipo" value="#{tipoproyectoController.selected.nomTipo}" title="#{bundle.EditTipoproyectoTitle_nomTipo}" />
+                    <p:outputLabel value="#{bundle.EditTipoproyectoLabel_nomtipoING}" for="nomtipoING" />
+                    <p:inputText id="nomtipoING" value="#{tipoproyectoController.selected.nomtipoING}" title="#{bundle.EditTipoproyectoTitle_nomtipoING}" />
+                </p:panelGrid>
+                <h:commandLink action="#{tipoproyectoController.update}" value="#{bundle.EditTipoproyectoSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTipoproyectoViewLink}"/>
+                <br />
+                <h:commandLink action="#{tipoproyectoController.prepareList}" value="#{bundle.EditTipoproyectoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTipoproyectoIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

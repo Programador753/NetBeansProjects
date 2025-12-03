@@ -7,22 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Editar Sector Propio</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSectorpropioTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Sector Propio">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código:" for="codSectorPropio"/>
-                        <p:inputText id="codSectorPropio" value="#{sectorpropioController.selected.codSectorPropio}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *" for="nomSectorPropio"/>
-                        <p:inputText id="nomSectorPropio" value="#{sectorpropioController.selected.nomSectorPropio}" required="true" size="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{sectorpropioController.update}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{sectorpropioController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditSectorpropioLabel_codSector}" for="codSector" />
+                    <p:inputText id="codSector" value="#{sectorpropioController.selected.codSector}" title="#{bundle.EditSectorpropioTitle_codSector}" required="true" requiredMessage="#{bundle.EditSectorpropioRequiredMessage_codSector}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditSectorpropioLabel_nomSector}" for="nomSector" />
+                    <p:inputText id="nomSector" value="#{sectorpropioController.selected.nomSector}" title="#{bundle.EditSectorpropioTitle_nomSector}" />
+                </p:panelGrid>
+                <p:commandLink action="#{sectorpropioController.update}" value="#{bundle.EditSectorpropioSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditSectorpropioViewLink}"/>
+                <br />
+                <p:commandLink action="#{sectorpropioController.prepareList}" value="#{bundle.EditSectorpropioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditSectorpropioIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

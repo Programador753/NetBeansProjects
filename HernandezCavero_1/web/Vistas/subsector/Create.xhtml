@@ -7,29 +7,38 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Nuevo Subsector MS</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateSubsectorTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Subsector">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo: *"/>
-                        <p:inputText value="#{subsectorController.selected.codSubsector}" required="true" size="5"/>
-                        <p:outputLabel value="Sector Padre:"/>
-                        <h:selectOneMenu value="#{subsectorController.selected.codSector}">
-                            <f:selectItem itemLabel="-- Seleccione Sector --" itemValue=""/>
-                            <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
-                        </h:selectOneMenu>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{subsectorController.selected.nomSubsector}" required="true" size="60" style="width:400px;"/>
-                        <p:outputLabel value="Descripcion:"/>
-                        <p:inputTextarea value="#{subsectorController.selected.descripcion}" rows="3" cols="50"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateSubsectorTitle}">
+                    <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="#{bundle.CreateSubsectorLabel_codSubsector}" for="codSubsector" />
+                    <p:inputText id="codSubsector" value="#{subsectorController.selected.codSubsector}" title="#{bundle.CreateSubsectorTitle_codSubsector}" required="true" requiredMessage="#{bundle.CreateSubsectorRequiredMessage_codSubsector}"/>
+                    <p:outputLabel value="#{bundle.CreateSubsectorLabel_nomSubsector}" for="nomSubsector" />
+                    <p:inputText id="nomSubsector" value="#{subsectorController.selected.nomSubsector}" title="#{bundle.CreateSubsectorTitle_nomSubsector}" />
+                    <p:outputLabel value="#{bundle.CreateSubsectorLabel_codSector}" for="codSector" />
+                    <p:selectOneMenu id="codSector" value="#{subsectorController.selected.codSector}" title="#{bundle.CreateSubsectorTitle_codSector}" >
+                        <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{subsectorController.create}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{subsectorController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{subsectorController.create}" value="#{bundle.CreateSubsectorSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{subsectorController.prepareList}" value="#{bundle.CreateSubsectorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateSubsectorIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

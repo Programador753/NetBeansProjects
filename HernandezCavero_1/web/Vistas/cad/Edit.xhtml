@@ -7,22 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Sector CAD: #{cadController.selected.nomCad}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Sector CAD">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo CAD:"/>
-                        <p:inputText value="#{cadController.selected.codCad}" disabled="true"/>
-                        <p:outputLabel value="Nombre (Espanol): *"/>
-                        <p:inputText value="#{cadController.selected.nomCad}" required="true" size="60" style="width:400px;"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{cadController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{cadController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditCadLabel_codCad}" for="codCad" />
+                    <p:inputText id="codCad" value="#{cadController.selected.codCad}" title="#{bundle.EditCadTitle_codCad}" disabled="true"/>
+
+                    <p:outputLabel value="#{bundle.EditCadLabel_nomCad}" for="nomCad" />
+                    <p:inputText id="nomCad" value="#{cadController.selected.nomCad}" title="#{bundle.EditCadTitle_nomCad}" />
+                </p:panelGrid>
+
+                <p:commandLink action="#{cadController.update}" value="#{bundle.EditCadSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditCadViewLink}"/>
+                <br />
+                <p:commandLink action="#{cadController.prepareList}" value="#{bundle.EditCadShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditCadIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

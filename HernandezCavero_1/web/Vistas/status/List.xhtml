@@ -8,51 +8,45 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value=" Listado de Estados de Proyecto"/>
+            <h:outputText value="#{bundle.ListStatusTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                
-                <p:dataTable value="#{statusController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} estados"
-                             emptyMessage="No hay estados registrados"
-                             style="margin-top:20px;">
-                    
-                    <!-- Código -->
-                    <p:column headerText="Código" sortBy="#{item.codStatus}" width="100" style="text-align:center">
-                        <h:outputText value="#{item.codStatus}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{statusController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListStatusTitle_codStatus}" sortBy="#{item.codStatus}" filterBy="#{item.codStatus}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codStatus}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Estado" sortBy="#{item.nomStatus}">
+
+                    <p:column headerText="#{bundle.ListStatusTitle_nomStatus}" sortBy="#{item.nomStatus}" filterBy="#{item.nomStatus}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomStatus}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{statusController.prepareView}" value=" Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{statusController.prepareEdit}" value=" Editar" 
-                                       title="Editar estado" style="margin-right:8px;"/>
-                        <h:commandLink action="#{statusController.destroy}" value=" Eliminar" 
-                                       title="Eliminar estado"
-                                       onclick="return confirm('¿Está seguro de eliminar este estado?');"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{statusController.prepareView}" value="#{bundle.ListStatusViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{statusController.prepareEdit}" value="#{bundle.ListStatusEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{statusController.destroy}" value="#{bundle.ListStatusDestroyLink}"/>
                     </p:column>
-                    
                 </p:dataTable>
-                
+
                 <br />
-                <p:commandButton value=" Nuevo Estado" action="#{statusController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value=" Volver al Inicio"/>
+                <h:commandLink action="#{statusController.prepareCreate}" value="#{bundle.ListStatusCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListStatusIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

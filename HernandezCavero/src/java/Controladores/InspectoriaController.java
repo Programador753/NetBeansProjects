@@ -192,7 +192,7 @@ public class InspectoriaController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Inspectoria.class)
+    @FacesConverter(forClass = Inspectoria.class, value = "inspectoriaConverter")
     public static class InspectoriaControllerConverter implements Converter {
 
         @Override
@@ -221,6 +221,9 @@ public class InspectoriaController implements Serializable {
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
+            }
+            if (object instanceof String) {
+                return (String) object;
             }
             if (object instanceof Inspectoria) {
                 Inspectoria o = (Inspectoria) object;

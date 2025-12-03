@@ -7,22 +7,33 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Tipo Entidad: #{tipoentidadController.selected.nomTipo}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTipoentidadTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Tipo de Entidad">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo:"/>
-                        <p:inputText value="#{tipoentidadController.selected.codigo}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{tipoentidadController.selected.nomTipo}" required="true" size="60" style="width:400px;"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{tipoentidadController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{tipoentidadController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditTipoentidadLabel_codTipo}" for="codTipo" />
+                    <p:inputText id="codTipo" value="#{tipoentidadController.selected.codTipo}" title="#{bundle.EditTipoentidadTitle_codTipo}" required="true" requiredMessage="#{bundle.EditTipoentidadRequiredMessage_codTipo}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditTipoentidadLabel_nomTipo}" for="nomTipo" />
+                    <p:inputText id="nomTipo" value="#{tipoentidadController.selected.nomTipo}" title="#{bundle.EditTipoentidadTitle_nomTipo}" />
+                    <p:outputLabel value="#{bundle.EditTipoentidadLabel_tipoOrganismo}" for="tipoOrganismo" />
+                    <p:inputText id="tipoOrganismo" value="#{tipoentidadController.selected.tipoOrganismo}" title="#{bundle.EditTipoentidadTitle_tipoOrganismo}" />
+                </p:panelGrid>
+                <h:commandLink action="#{tipoentidadController.update}" value="#{bundle.EditTipoentidadSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTipoentidadViewLink}"/>
+                <br />
+                <h:commandLink action="#{tipoentidadController.prepareList}" value="#{bundle.EditTipoentidadShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTipoentidadIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

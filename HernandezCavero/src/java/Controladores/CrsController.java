@@ -192,7 +192,7 @@ public class CrsController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Crs.class)
+    @FacesConverter(forClass = Crs.class, value = "crsConverter")
     public static class CrsControllerConverter implements Converter {
 
         @Override

@@ -6,6 +6,7 @@ import Controladores.util.PaginationHelper;
 import Repositorios.ProyectoFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -24,6 +25,7 @@ public class ProyectoController implements Serializable {
 
     private Proyecto current;
     private DataModel items = null;
+    private List<Proyecto> filteredItems;
     @EJB
     private Repositorios.ProyectoFacade ejbFacade;
     private PaginationHelper pagination;
@@ -38,6 +40,14 @@ public class ProyectoController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+
+    public Proyecto getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Proyecto current) {
+        this.current = current;
     }
 
     private ProyectoFacade getFacade() {
@@ -73,6 +83,11 @@ public class ProyectoController implements Serializable {
         return "View";
     }
 
+    public String prepareViewFromList() {
+        selectedItemIndex = -1;
+        return "View";
+    }
+
     public String prepareCreate() {
         current = new Proyecto();
         selectedItemIndex = -1;
@@ -96,6 +111,11 @@ public class ProyectoController implements Serializable {
         return "Edit";
     }
 
+    public String prepareEditFromList() {
+        selectedItemIndex = -1;
+        return "Edit";
+    }
+
     public String update() {
         try {
             getFacade().edit(current);
@@ -114,6 +134,14 @@ public class ProyectoController implements Serializable {
         recreatePagination();
         recreateModel();
         return "List";
+    }
+
+    public String destroyFromList() {
+        selectedItemIndex = -1;
+        performDestroy();
+        recreatePagination();
+        recreateModel();
+        return "ListConFiltros";
     }
 
     public String destroyAndView() {
@@ -158,6 +186,18 @@ public class ProyectoController implements Serializable {
             items = getPagination().createPageDataModel();
         }
         return items;
+    }
+
+    public List<Proyecto> getAllItems() {
+        return getFacade().findAll();
+    }
+
+    public List<Proyecto> getFilteredItems() {
+        return filteredItems;
+    }
+
+    public void setFilteredItems(List<Proyecto> filteredItems) {
+        this.filteredItems = filteredItems;
     }
 
     private void recreateModel() {

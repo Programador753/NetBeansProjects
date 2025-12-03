@@ -7,22 +7,31 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Region: #{regionController.selected.nomRegion}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditRegionTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos de la Region">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo:"/>
-                        <p:inputText value="#{regionController.selected.codRegion}" disabled="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{regionController.selected.nomRegion}" required="true" size="50" style="width:300px;"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{regionController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{regionController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditRegionLabel_codRegion}" for="codRegion" />
+                    <p:inputText id="codRegion" value="#{regionController.selected.codRegion}" title="#{bundle.EditRegionTitle_codRegion}" required="true" requiredMessage="#{bundle.EditRegionRequiredMessage_codRegion}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditRegionLabel_nomRegion}" for="nomRegion" />
+                    <p:inputText id="nomRegion" value="#{regionController.selected.nomRegion}" title="#{bundle.EditRegionTitle_nomRegion}" />
+                </p:panelGrid>
+                <p:commandLink action="#{regionController.update}" value="#{bundle.EditRegionSaveLink}"/>
+                <br />
+                <br />
+                <p:link outcome="View" value="#{bundle.EditRegionViewLink}"/>
+                <br />
+                <p:commandLink action="#{regionController.prepareList}" value="#{bundle.EditRegionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <p:link outcome="/index" value="#{bundle.EditRegionIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

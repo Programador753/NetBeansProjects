@@ -7,22 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle Estado</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewStatusTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Estado de Proyecto">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código:" style="font-weight:bold;"/>
-                        <h:outputText value="#{statusController.selected.codStatus}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{statusController.selected.nomStatus}"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{statusController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{statusController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{statusController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewStatusLabel_codStatus}"/>
+                    <h:outputText value="#{statusController.selected.codStatus}" title="#{bundle.ViewStatusTitle_codStatus}"/>
+                    <h:outputText value="#{bundle.ViewStatusLabel_nomStatus}"/>
+                    <h:outputText value="#{statusController.selected.nomStatus}" title="#{bundle.ViewStatusTitle_nomStatus}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{statusController.destroyAndView}" value="#{bundle.ViewStatusDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewStatusEditLink}"/>
+                <br />
+                <h:commandLink action="#{statusController.prepareCreate}" value="#{bundle.ViewStatusCreateLink}" />
+                <br />
+                <h:commandLink action="#{statusController.prepareList}" value="#{bundle.ViewStatusShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewStatusIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

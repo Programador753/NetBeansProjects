@@ -7,22 +7,34 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Nuevo Socio Local</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateSociolocalTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="🤝 Socio Local">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código: *" for="codSocio"/>
-                        <p:inputText id="codSocio" value="#{sociolocalController.selected.codSocio}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *" for="nomSocio"/>
-                        <p:inputText id="nomSocio" value="#{sociolocalController.selected.nomSocio}" required="true" size="50"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateSociolocalTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateSociolocalLabel_codSocio}" for="codSocio" />
+                    <p:inputText id="codSocio" value="#{sociolocalController.selected.codSocio}" title="#{bundle.CreateSociolocalTitle_codSocio}" required="true" requiredMessage="#{bundle.CreateSociolocalRequiredMessage_codSocio}"/>
+                    <p:outputLabel value="#{bundle.CreateSociolocalLabel_nomSocio}" for="nomSocio" />
+                    <p:inputText id="nomSocio" value="#{sociolocalController.selected.nomSocio}" title="#{bundle.CreateSociolocalTitle_nomSocio}" />
+                    <p:outputLabel value="#{bundle.CreateSociolocalLabel_orden}" for="orden" />
+                    <p:inputText id="orden" value="#{sociolocalController.selected.orden}" title="#{bundle.CreateSociolocalTitle_orden}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{sociolocalController.create}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{sociolocalController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{sociolocalController.create}" value="#{bundle.CreateSociolocalSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{sociolocalController.prepareList}" value="#{bundle.CreateSociolocalShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateSociolocalIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

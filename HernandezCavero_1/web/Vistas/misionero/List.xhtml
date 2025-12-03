@@ -8,72 +8,67 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Listado de Misioneros"/>
+            <h:outputText value="#{bundle.ListMisioneroTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
-                <p:dataTable value="#{misioneroController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} misioneros"
-                             rowsPerPageTemplate="5,10,25,50"
-                             emptyMessage="No hay misioneros registrados"
-                             tableStyle="table-layout:auto"
-                             style="margin-top:20px;">
-                    
-                    <!-- Codigo -->
-                    <p:column headerText="Cod." sortBy="#{item.codMisionero}" style="text-align:center; width:60px;">
-                        <h:outputText value="#{item.codMisionero}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{misioneroController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_codMisionero}" sortBy="#{item.codMisionero}" filterBy="#{item.codMisionero}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codMisionero}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Nombre" sortBy="#{item.nomMisionero}">
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_nomMisionero}" sortBy="#{item.nomMisionero}" filterBy="#{item.nomMisionero}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomMisionero}"/>
                     </p:column>
-                    
-                    <!-- Tipo -->
-                    <p:column headerText="Tipo" sortBy="#{item.tipoMisionero}" style="text-align:center; width:50px;">
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_tipoMisionero}" sortBy="#{item.tipoMisionero}" filterBy="#{item.tipoMisionero}" filterMatchMode="contains">
                         <h:outputText value="#{item.tipoMisionero}"/>
                     </p:column>
-                    
-                    <!-- Email Principal -->
-                    <p:column headerText="Email" sortBy="#{item.mail1}" style="width:180px;">
-                        <h:outputLink value="mailto:#{item.mail1}" rendered="#{item.mail1 ne null and item.mail1 ne ''}">
-                            <h:outputText value="#{item.mail1}"/>
-                        </h:outputLink>
-                        <h:outputText value="-" rendered="#{item.mail1 eq null or item.mail1 eq ''}" style="color:#999;"/>
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_mail1}">
+                        <h:outputText value="#{item.mail1}"/>
                     </p:column>
-                    
-                    <!-- Codigo Mision -->
-                    <p:column headerText="Mision" sortBy="#{item.codMision}" style="text-align:center; width:60px;">
-                        <h:outputText value="#{item.codMision}" rendered="#{item.codMision ne null}"/>
-                        <h:outputText value="-" rendered="#{item.codMision eq null}" style="color:#999;"/>
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_mail2}">
+                        <h:outputText value="#{item.mail2}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" style="text-align:center; width:120px;" exportable="false">
-                        <h:commandLink action="#{misioneroController.prepareView}" value="Ver" 
-                                       title="Ver detalles" style="margin-right:5px;"/>
-                        <h:commandLink action="#{misioneroController.prepareEdit}" value="Editar" 
-                                       title="Editar misionero" style="margin-right:5px;"/>
-                        <h:commandLink action="#{misioneroController.destroy}" value="X" 
-                                       title="Eliminar misionero" style="color:red;"
-                                       onclick="return confirm('Esta seguro de eliminar este misionero?');"/>
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_telefono}">
+                        <h:outputText value="#{item.telefono}"/>
                     </p:column>
-                    
+
+                    <p:column headerText="#{bundle.ListMisioneroTitle_codMision}">
+                        <h:outputText value="#{item.codMision}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{misioneroController.prepareView}" value="#{bundle.ListMisioneroViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{misioneroController.prepareEdit}" value="#{bundle.ListMisioneroEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{misioneroController.destroy}" value="#{bundle.ListMisioneroDestroyLink}"/>
+                    </p:column>
                 </p:dataTable>
-                
                 <br />
-                <p:commandButton value="Nuevo Misionero" action="#{misioneroController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value="Volver al Inicio"/>
+                <h:commandLink action="#{misioneroController.prepareCreate}" value="#{bundle.ListMisioneroCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListMisioneroIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

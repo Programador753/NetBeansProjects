@@ -7,22 +7,32 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Nueva Region</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateRegionTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos de la Region">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo: *"/>
-                        <p:inputText value="#{regionController.selected.codRegion}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{regionController.selected.nomRegion}" required="true" size="50" style="width:300px;"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateRegionTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateRegionLabel_codRegion}" for="codRegion" />
+                    <p:inputText id="codRegion" value="#{regionController.selected.codRegion}" title="#{bundle.CreateRegionTitle_codRegion}" required="true" requiredMessage="#{bundle.CreateRegionRequiredMessage_codRegion}"/>
+                    <p:outputLabel value="#{bundle.CreateRegionLabel_nomRegion}" for="nomRegion" />
+                    <p:inputText id="nomRegion" value="#{regionController.selected.nomRegion}" title="#{bundle.CreateRegionTitle_nomRegion}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{regionController.create}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{regionController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{regionController.create}" value="#{bundle.CreateRegionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{regionController.prepareList}" value="#{bundle.CreateRegionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateRegionIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

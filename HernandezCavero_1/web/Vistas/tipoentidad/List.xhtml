@@ -8,51 +8,40 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value=" Tipos de Entidad"/>
+            <h:outputText value="#{bundle.ListTipoentidadTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                
-                <p:dataTable value="#{tipoentidadController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} tipos"
-                             emptyMessage="No hay tipos de entidad registrados"
-                             style="margin-top:20px;">
-                    
-                    <!-- Código -->
-                    <p:column headerText="Código" sortBy="#{item.codTipo}" width="100" style="text-align:center">
-                        <h:outputText value="#{item.codTipo}" style="font-weight:bold; color:#1a237e;"/>
-                    </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Tipo de Entidad" sortBy="#{item.nomTipo}">
-                        <h:outputText value="#{item.nomTipo}"/>
-                    </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{tipoentidadController.prepareView}" value=" Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{tipoentidadController.prepareEdit}" value=" Editar" 
-                                       title="Editar tipo" style="margin-right:8px;"/>
-                        <h:commandLink action="#{tipoentidadController.destroy}" value=" Eliminar" 
-                                       title="Eliminar tipo"
-                                       onclick="return confirm('¿Está seguro de eliminar este tipo de entidad?');"/>
-                    </p:column>
-                    
-                </p:dataTable>
-                
+                    <p:dataTable value="#{tipoentidadController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+                        <p:column headerText="#{bundle.ListTipoentidadTitle_codTipo}"><h:outputText value="#{item.codTipo}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListTipoentidadTitle_nomTipo}"><h:outputText value="#{item.nomTipo}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListTipoentidadTitle_tipoOrganismo}"><h:outputText value="#{item.tipoOrganismo}"/>
+                        </p:column>
+                        <p:column><h:commandLink action="#{tipoentidadController.prepareView}" value="#{bundle.ListTipoentidadViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{tipoentidadController.prepareEdit}" value="#{bundle.ListTipoentidadEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{tipoentidadController.destroy}" value="#{bundle.ListTipoentidadDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
                 <br />
-                <p:commandButton value=" Nuevo Tipo" action="#{tipoentidadController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value=" Volver al Inicio"/>
+                <h:commandLink action="#{tipoentidadController.prepareCreate}" value="#{bundle.ListTipoentidadCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListTipoentidadIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

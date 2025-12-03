@@ -95,7 +95,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Proyecto.findByInformeDonante", query = "SELECT p FROM Proyecto p WHERE p.informeDonante = :informeDonante")
     , @NamedQuery(name = "Proyecto.findByCategoria", query = "SELECT p FROM Proyecto p WHERE p.categoria = :categoria")
     , @NamedQuery(name = "Proyecto.findBySubcategoria", query = "SELECT p FROM Proyecto p WHERE p.subcategoria = :subcategoria")
-    , @NamedQuery(name = "Proyecto.findByExtinguido", query = "SELECT p FROM Proyecto p WHERE p.extinguido = :extinguido")})
+    , @NamedQuery(name = "Proyecto.findByExtinguido", query = "SELECT p FROM Proyecto p WHERE p.extinguido = :extinguido")
+    , @NamedQuery(name = "Proyecto.findByInspectoria", query = "SELECT p FROM Proyecto p WHERE p.inspectoria = :inspectoria")
+    , @NamedQuery(name = "Proyecto.findByInspectoriaAndStatus", query = "SELECT p FROM Proyecto p WHERE p.inspectoria = :inspectoria AND p.status = :status")})
 public class Proyecto implements Serializable {
 
     private static final long serialVersionUID = 1L;

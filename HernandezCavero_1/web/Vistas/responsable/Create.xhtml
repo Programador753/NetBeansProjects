@@ -7,31 +7,36 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Nuevo Responsable</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateResponsableTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Responsable">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo: *"/>
-                        <p:inputText value="#{responsableController.selected.codResponsable}" required="true"/>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{responsableController.selected.nomResponsable}" required="true" size="60" style="width:400px;"/>
-                        <p:outputLabel value="Tratamiento:"/>
-                        <p:inputText value="#{responsableController.selected.tratamiento}" size="50"/>
-                        <p:outputLabel value="Tipo Misionero:"/>
-                        <p:selectOneMenu value="#{responsableController.selected.tipoMisionero}">
-                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                            <f:selectItem itemLabel="SDB" itemValue="SDB"/>
-                            <f:selectItem itemLabel="FMA" itemValue="FMA"/>
-                            <f:selectItem itemLabel="HDS" itemValue="HDS"/>
-                        </p:selectOneMenu>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateResponsableTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateResponsableLabel_codResponsable}" for="codResponsable" />
+                    <p:inputText id="codResponsable" value="#{responsableController.selected.codResponsable}" title="#{bundle.CreateResponsableTitle_codResponsable}" required="true" requiredMessage="#{bundle.CreateResponsableRequiredMessage_codResponsable}"/>
+                    <p:outputLabel value="#{bundle.CreateResponsableLabel_nomResponsable}" for="nomResponsable" />
+                    <p:inputText id="nomResponsable" value="#{responsableController.selected.nomResponsable}" title="#{bundle.CreateResponsableTitle_nomResponsable}" />
+                    <p:outputLabel value="#{bundle.CreateResponsableLabel_tratamiento}" for="tratamiento" />
+                    <p:inputText id="tratamiento" value="#{responsableController.selected.tratamiento}" title="#{bundle.CreateResponsableTitle_tratamiento}" />
+                    <p:outputLabel value="#{bundle.CreateResponsableLabel_tipoMisionero}" for="tipoMisionero" />
+                    <p:inputText id="tipoMisionero" value="#{responsableController.selected.tipoMisionero}" title="#{bundle.CreateResponsableTitle_tipoMisionero}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{responsableController.create}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{responsableController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{responsableController.create}" value="#{bundle.CreateResponsableSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{responsableController.prepareList}" value="#{bundle.CreateResponsableShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateResponsableIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

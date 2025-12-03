@@ -8,55 +8,44 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Detalle del Envio"/>
+            <h:outputText value="#{bundle.ViewEnvioTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Informacion del Envio">
-                    <h:panelGrid columns="4" cellpadding="10" style="width:100%;">
-                        
-                        <h:outputText value="Codigo Proyecto:" style="font-weight:bold;"/>
-                        <h:outputText value="#{envioController.selected.envioPK.codigo}" style="font-size:1.2em; color:#1a237e;"/>
-                        
-                        <h:outputText value="Fecha Envio:" style="font-weight:bold;"/>
-                        <h:outputText value="#{envioController.selected.envioPK.fecha}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                        
-                        <h:outputText value="Cantidad:" style="font-weight:bold;"/>
-                        <h:outputText value="#{envioController.selected.cantidad}" style="font-size:1.3em; color:#4CAF50; font-weight:bold;">
-                            <f:convertNumber type="currency" currencySymbol="EUR" minFractionDigits="2"/>
-                        </h:outputText>
-                        
-                        <h:outputText value="Proyecto:" style="font-weight:bold;"/>
-                        <h:outputText value="#{envioController.selected.proyecto.titulo}" 
-                                      rendered="#{envioController.selected.proyecto ne null}"/>
-                        
-                        <h:outputText value="Acuse Recibo MS:" style="font-weight:bold;"/>
-                        <h:outputText value="Recibido" rendered="#{envioController.selected.acuseReciboMs eq true}" style="color:#4CAF50;"/>
-                        <h:outputText value="Pendiente" rendered="#{envioController.selected.acuseReciboMs ne true}" style="color:#FF9800;"/>
-                        
-                        <h:outputText value="Acuse Banco:" style="font-weight:bold;"/>
-                        <h:outputText value="Confirmado" rendered="#{envioController.selected.acuseBanco eq true}" style="color:#4CAF50;"/>
-                        <h:outputText value="Pendiente" rendered="#{envioController.selected.acuseBanco ne true}" style="color:#FF9800;"/>
-                        
-                        <h:outputText value="Comentario:" style="font-weight:bold;"/>
-                        <h:outputText value="#{envioController.selected.comentario}" style="grid-column: span 3;"/>
-                        
-                    </h:panelGrid>
-                </p:panel>
-                
-                <br/>
-                <h:panelGroup style="display:flex; gap:10px;">
-                    <p:commandButton value="Editar" action="#{envioController.prepareEdit}" 
-                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
-                    <p:commandButton value="Eliminar" action="#{envioController.destroy}" 
-                                     icon="pi pi-trash" styleClass="ui-button-danger"
-                                     onclick="return confirm('Esta seguro de eliminar este envio?');"/>
-                    <p:commandButton value="Volver al Listado" action="#{envioController.prepareList}" 
-                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
-                </h:panelGroup>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEnvioLabel_envioPK_fecha}"/>
+                    <h:outputText value="#{envioController.selected.envioPK.fecha}" title="#{bundle.ViewEnvioTitle_envioPK_fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewEnvioLabel_cantidad}"/>
+                    <h:outputText value="#{envioController.selected.cantidad}" title="#{bundle.ViewEnvioTitle_cantidad}"/>
+                    <h:outputText value="#{bundle.ViewEnvioLabel_acuseReciboMs}"/>
+                    <h:outputText value="#{envioController.selected.acuseReciboMs}" title="#{bundle.ViewEnvioTitle_acuseReciboMs}"/>
+                    <h:outputText value="#{bundle.ViewEnvioLabel_acuseBanco}"/>
+                    <h:outputText value="#{envioController.selected.acuseBanco}" title="#{bundle.ViewEnvioTitle_acuseBanco}"/>
+                    <h:outputText value="#{bundle.ViewEnvioLabel_comentario}"/>
+                    <h:outputText value="#{envioController.selected.comentario}" title="#{bundle.ViewEnvioTitle_comentario}"/>
+                    <h:outputText value="#{bundle.ViewEnvioLabel_proyecto}"/>
+                    <h:outputText value="#{envioController.selected.proyecto}" title="#{bundle.ViewEnvioTitle_proyecto}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{envioController.destroyAndView}" value="#{bundle.ViewEnvioDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewEnvioEditLink}"/>
+                <br />
+                <h:commandLink action="#{envioController.prepareCreate}" value="#{bundle.ViewEnvioCreateLink}" />
+                <br />
+                <h:commandLink action="#{envioController.prepareList}" value="#{bundle.ViewEnvioShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewEnvioIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

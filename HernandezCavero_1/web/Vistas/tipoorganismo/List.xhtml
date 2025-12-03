@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -14,36 +15,26 @@
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListTipoorganismoEmpty}" rendered="#{tipoorganismoController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{tipoorganismoController.items.rowCount > 0}">
-                    <h:outputText value="#{tipoorganismoController.pagination.pageFirstItem + 1}..#{tipoorganismoController.pagination.pageLastItem + 1}/#{tipoorganismoController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{tipoorganismoController.previous}" value="#{bundle.Previous} #{tipoorganismoController.pagination.pageSize}" rendered="#{tipoorganismoController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{tipoorganismoController.next}" value="#{bundle.Next} #{tipoorganismoController.pagination.pageSize}" rendered="#{tipoorganismoController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{tipoorganismoController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoorganismoTitle_codTipo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codTipo}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTipoorganismoTitle_nomTipo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomTipo}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{tipoorganismoController.prepareView}" value="#{bundle.ListTipoorganismoViewLink}"/>
+                    <p:dataTable value="#{tipoorganismoController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+                        <p:column headerText="#{bundle.ListTipoorganismoTitle_codTipo}"><h:outputText value="#{item.codTipo}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListTipoorganismoTitle_nomTipo}"><h:outputText value="#{item.nomTipo}"/>
+                        </p:column>
+                        <p:column><h:commandLink action="#{tipoorganismoController.prepareView}" value="#{bundle.ListTipoorganismoViewLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{tipoorganismoController.prepareEdit}" value="#{bundle.ListTipoorganismoEditLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{tipoorganismoController.destroy}" value="#{bundle.ListTipoorganismoDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
                 <br />
                 <h:commandLink action="#{tipoorganismoController.prepareCreate}" value="#{bundle.ListTipoorganismoCreateLink}"/>
                 <br />

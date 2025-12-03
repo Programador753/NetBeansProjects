@@ -7,22 +7,32 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Nuevo Sector Propio</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateSectorpropioTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Sector Propio">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Código: *" for="codSectorPropio"/>
-                        <p:inputText id="codSectorPropio" value="#{sectorpropioController.selected.codSectorPropio}" required="true" size="5"/>
-                        <p:outputLabel value="Nombre: *" for="nomSectorPropio"/>
-                        <p:inputText id="nomSectorPropio" value="#{sectorpropioController.selected.nomSectorPropio}" required="true" size="50"/>
-                    </h:panelGrid>
+                <p:panel header="#{bundle.CreateSectorpropioTitle}">
+                    <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateSectorpropioLabel_codSector}" for="codSector" />
+                    <p:inputText id="codSector" value="#{sectorpropioController.selected.codSector}" title="#{bundle.CreateSectorpropioTitle_codSector}" required="true" requiredMessage="#{bundle.CreateSectorpropioRequiredMessage_codSector}"/>
+                    <p:outputLabel value="#{bundle.CreateSectorpropioLabel_nomSector}" for="nomSector" />
+                    <p:inputText id="nomSector" value="#{sectorpropioController.selected.nomSector}" title="#{bundle.CreateSectorpropioTitle_nomSector}" />
+                </p:panelGrid>
                 </p:panel>
-                <br/>
-                <p:commandButton value=" Guardar" action="#{sectorpropioController.create}" icon="pi pi-save"/>
-                <p:commandButton value=" Volver" action="#{sectorpropioController.prepareList}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{sectorpropioController.create}" value="#{bundle.CreateSectorpropioSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{sectorpropioController.prepareList}" value="#{bundle.CreateSectorpropioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateSectorpropioIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

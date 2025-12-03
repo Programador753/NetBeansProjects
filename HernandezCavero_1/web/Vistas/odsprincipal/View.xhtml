@@ -7,33 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title"> Detalle ODS #{odsprincipalController.selected.codOds}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewOdsprincipalTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header=" Objetivo de Desarrollo Sostenible">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="Código ODS:" style="font-weight:bold;"/>
-                        <h:outputText value="ODS #{odsprincipalController.selected.codOds}" style="font-size:1.3em; color:#1a237e;"/>
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{odsprincipalController.selected.nomOds}"/>
-                    </h:panelGrid>
-                </p:panel>
-                
-                <p:panel header=" Proyectos con este ODS" style="margin-top:15px;">
-                    <p:dataTable value="#{odsprincipalController.selected.proyectoList}" var="proyecto"
-                                 emptyMessage="No hay proyectos asociados" rows="5" paginator="true"
-                                 rendered="#{not empty odsprincipalController.selected.proyectoList}">
-                        <p:column headerText="Código" width="120"><h:outputText value="#{proyecto.codigo}"/></p:column>
-                        <p:column headerText="Título"><h:outputText value="#{proyecto.titulo}"/></p:column>
-                        <p:column headerText="Año" width="60"><h:outputText value="#{proyecto.anyo}"/></p:column>
-                    </p:dataTable>
-                    <h:outputText value="No hay proyectos asociados" rendered="#{empty odsprincipalController.selected.proyectoList}" style="color:#999;"/>
-                </p:panel>
-                <br/>
-                <p:commandButton value=" Editar" action="#{odsprincipalController.prepareEdit}" icon="pi pi-pencil"/>
-                <p:commandButton value=" Eliminar" action="#{odsprincipalController.destroy}" onclick="return confirm('¿Eliminar?');"/>
-                <p:commandButton value=" Volver" action="#{odsprincipalController.prepareList}"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewOdsprincipalLabel_codOds}"/>
+                    <h:outputText value="#{odsprincipalController.selected.codOds}" title="#{bundle.ViewOdsprincipalTitle_codOds}"/>
+                    <h:outputText value="#{bundle.ViewOdsprincipalLabel_nomOds}"/>
+                    <h:outputText value="#{odsprincipalController.selected.nomOds}" title="#{bundle.ViewOdsprincipalTitle_nomOds}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{odsprincipalController.destroyAndView}" value="#{bundle.ViewOdsprincipalDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewOdsprincipalEditLink}"/>
+                <br />
+                <h:commandLink action="#{odsprincipalController.prepareCreate}" value="#{bundle.ViewOdsprincipalCreateLink}" />
+                <br />
+                <h:commandLink action="#{odsprincipalController.prepareList}" value="#{bundle.ViewOdsprincipalShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewOdsprincipalIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

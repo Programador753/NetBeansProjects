@@ -7,29 +7,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">Editar Subsector: #{subsectorController.selected.nomSubsector}</ui:define>
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditSubsectorTitle}"></h:outputText>
+        </ui:define>
         <ui:define name="body">
-            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Datos del Subsector">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel value="Codigo:"/>
-                        <p:inputText value="#{subsectorController.selected.codSubsector}" disabled="true"/>
-                        <p:outputLabel value="Sector Padre:"/>
-                        <h:selectOneMenu value="#{subsectorController.selected.codSector}">
-                            <f:selectItem itemLabel="-- Seleccione Sector --" itemValue=""/>
-                            <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
-                        </h:selectOneMenu>
-                        <p:outputLabel value="Nombre: *"/>
-                        <p:inputText value="#{subsectorController.selected.nomSubsector}" required="true" size="60" style="width:400px;"/>
-                        <p:outputLabel value="Descripcion:"/>
-                        <p:inputTextarea value="#{subsectorController.selected.descripcion}" rows="3" cols="50"/>
-                    </h:panelGrid>
-                </p:panel>
-                <br/>
-                <p:commandButton value="Guardar" action="#{subsectorController.update}" icon="pi pi-save"/>
-                <p:commandButton value="Volver" action="#{subsectorController.prepareList}" immediate="true"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditSubsectorLabel_codSubsector}" for="codSubsector" />
+                    <p:inputText id="codSubsector" value="#{subsectorController.selected.codSubsector}" title="#{bundle.EditSubsectorTitle_codSubsector}" required="true" requiredMessage="#{bundle.EditSubsectorRequiredMessage_codSubsector}" disabled="true"/>
+                    <p:outputLabel value="#{bundle.EditSubsectorLabel_nomSubsector}" for="nomSubsector" />
+                    <p:inputText id="nomSubsector" value="#{subsectorController.selected.nomSubsector}" title="#{bundle.EditSubsectorTitle_nomSubsector}" />
+                    <p:outputLabel value="#{bundle.EditSubsectorLabel_codSector}" for="codSector" />
+                    <p:selectOneMenu id="codSector" value="#{subsectorController.selected.codSector}" title="#{bundle.EditSubsectorTitle_codSector}" >
+                        <f:selectItems value="#{sectorController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <h:commandLink action="#{subsectorController.update}" value="#{bundle.EditSubsectorSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditSubsectorViewLink}"/>
+                <br />
+                <h:commandLink action="#{subsectorController.prepareList}" value="#{bundle.EditSubsectorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditSubsectorIndexLink}" />
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

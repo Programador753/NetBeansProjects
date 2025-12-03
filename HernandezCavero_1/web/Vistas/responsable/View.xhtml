@@ -8,39 +8,38 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Detalle Responsable: #{responsableController.selected.nomResponsable}"/>
+            <h:outputText value="#{bundle.ViewResponsableTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
             <h:form>
-                <p:panel header="Informacion del Responsable">
-                    <h:panelGrid columns="2" cellpadding="10" style="width:100%;">
-                        
-                        <h:outputText value="Codigo:" style="font-weight:bold;"/>
-                        <h:outputText value="#{responsableController.selected.codResponsable}" style="font-size:1.2em; color:#1a237e;"/>
-                        
-                        <h:outputText value="Nombre:" style="font-weight:bold;"/>
-                        <h:outputText value="#{responsableController.selected.nomResponsable}" style="font-size:1.1em;"/>
-                        
-                        <h:outputText value="Tratamiento:" style="font-weight:bold;"/>
-                        <h:outputText value="#{responsableController.selected.tratamiento}"/>
-                        
-                        <h:outputText value="Tipo Misionero:" style="font-weight:bold;"/>
-                        <h:outputText value="#{responsableController.selected.tipoMisionero}"/>
-                        
-                    </h:panelGrid>
-                </p:panel>
-                
-                <br/>
-                <h:panelGroup style="display:flex; gap:10px;">
-                    <p:commandButton value="Editar" action="#{responsableController.prepareEdit}" 
-                                     icon="pi pi-pencil" styleClass="ui-button-warning"/>
-                    <p:commandButton value="Eliminar" action="#{responsableController.destroy}" 
-                                     icon="pi pi-trash" styleClass="ui-button-danger"
-                                     onclick="return confirm('Esta seguro de eliminar este responsable?');"/>
-                    <p:commandButton value="Volver al Listado" action="#{responsableController.prepareList}" 
-                                     icon="pi pi-arrow-left" styleClass="ui-button-secondary"/>
-                </h:panelGroup>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewResponsableLabel_codResponsable}"/>
+                    <h:outputText value="#{responsableController.selected.codResponsable}" title="#{bundle.ViewResponsableTitle_codResponsable}"/>
+                    <h:outputText value="#{bundle.ViewResponsableLabel_nomResponsable}"/>
+                    <h:outputText value="#{responsableController.selected.nomResponsable}" title="#{bundle.ViewResponsableTitle_nomResponsable}"/>
+                    <h:outputText value="#{bundle.ViewResponsableLabel_tratamiento}"/>
+                    <h:outputText value="#{responsableController.selected.tratamiento}" title="#{bundle.ViewResponsableTitle_tratamiento}"/>
+                    <h:outputText value="#{bundle.ViewResponsableLabel_tipoMisionero}"/>
+                    <h:outputText value="#{responsableController.selected.tipoMisionero}" title="#{bundle.ViewResponsableTitle_tipoMisionero}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{responsableController.destroyAndView}" value="#{bundle.ViewResponsableDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewResponsableEditLink}"/>
+                <br />
+                <h:commandLink action="#{responsableController.prepareCreate}" value="#{bundle.ViewResponsableCreateLink}" />
+                <br />
+                <h:commandLink action="#{responsableController.prepareList}" value="#{bundle.ViewResponsableShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewResponsableIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -8,52 +8,45 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value=" Categorías CAD"/>
+            <h:outputText value="#{bundle.ListCadTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                
-                <p:dataTable value="#{cadController.items}" var="item" 
-                             rows="10" 
-                             paginator="true" 
-                             paginatorPosition="both"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} categorías CAD"
-                             rowsPerPageTemplate="5,10,25"
-                             emptyMessage="No hay categorías CAD registradas"
-                             style="margin-top:20px;">
-                    
-                    <!-- Código -->
-                    <p:column headerText="Código CAD" sortBy="#{item.codCad}" width="120" style="text-align:center">
-                        <h:outputText value="#{item.codCad}" style="font-weight:bold; color:#1a237e;"/>
+                <p:dataTable value="#{cadController.items}"
+                            var="item"
+                            rows="10"
+                            style="border:solid 1px"
+                            paginator="true"
+                            paginatorPosition="both"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                            rowsPerPageTemplate="5,10,20,{ShowAll|'All'}" reflow="true" stripedRows="true">
+
+                    <p:column headerText="#{bundle.ListCadTitle_codCad}" sortBy="#{item.codCad}" filterBy="#{item.codCad}" filterMatchMode="contains">
+                        <h:outputText value="#{item.codCad}"/>
                     </p:column>
-                    
-                    <!-- Nombre -->
-                    <p:column headerText="Nombre de la Categoría" sortBy="#{item.nomCad}">
+
+                    <p:column headerText="#{bundle.ListCadTitle_nomCad}" sortBy="#{item.nomCad}" filterBy="#{item.nomCad}" filterMatchMode="contains">
                         <h:outputText value="#{item.nomCad}"/>
                     </p:column>
-                    
-                    <!-- Acciones -->
-                    <p:column headerText="Acciones" width="180" style="text-align:center" exportable="false">
-                        <h:commandLink action="#{cadController.prepareView}" value=" Ver" 
-                                       title="Ver detalles" style="margin-right:8px;"/>
-                        <h:commandLink action="#{cadController.prepareEdit}" value=" Editar" 
-                                       title="Editar CAD" style="margin-right:8px;"/>
-                        <h:commandLink action="#{cadController.destroy}" value=" Eliminar" 
-                                       title="Eliminar CAD"
-                                       onclick="return confirm('¿Está seguro de eliminar esta categoría CAD?');"/>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{cadController.prepareView}" value="#{bundle.ListCadViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{cadController.prepareEdit}" value="#{bundle.ListCadEditLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{cadController.destroy}" value="#{bundle.ListCadDestroyLink}"/>
                     </p:column>
-                    
                 </p:dataTable>
-                
+
                 <br />
-                <p:commandButton value=" Nueva Categoría CAD" action="#{cadController.prepareCreate}" 
-                                 icon="pi pi-plus" styleClass="ui-button-success"/>
-                <br /><br />
-                <h:link outcome="/index" value=" Volver al Inicio"/>
+                <h:commandLink action="#{cadController.prepareCreate}" value="#{bundle.ListCadCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListCadIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

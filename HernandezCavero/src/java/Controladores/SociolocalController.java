@@ -183,6 +183,22 @@ public class SociolocalController implements Serializable {
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
+    
+    /**
+     * Devuelve los socios locales como SelectItem mostrando el nombre.
+     * Siguiendo el patrón del proyecto Biblioteca.
+     */
+    public SelectItem[] getItemsNombre() {
+        java.util.List<Sociolocal> listaSocios = ejbFacade.findAll();
+        SelectItem[] items = new SelectItem[listaSocios.size() + 1];
+        items[0] = new SelectItem(null, "-- Seleccione Socio Local --");
+        int i = 1;
+        for (Sociolocal socio : listaSocios) {
+            String label = socio.getNomSocio() != null ? socio.getNomSocio() : socio.getCodSocio();
+            items[i++] = new SelectItem(socio, label);
+        }
+        return items;
+    }
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
@@ -192,7 +208,7 @@ public class SociolocalController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Sociolocal.class)
+    @FacesConverter(forClass = Sociolocal.class, value = "sociolocalConverter")
     public static class SociolocalControllerConverter implements Converter {
 
         @Override
@@ -221,6 +237,9 @@ public class SociolocalController implements Serializable {
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
                 return null;
+            }
+            if (object instanceof String) {
+                return (String) object;
             }
             if (object instanceof Sociolocal) {
                 Sociolocal o = (Sociolocal) object;
